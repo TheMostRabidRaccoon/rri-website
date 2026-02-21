@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rabid Raccoon Intelligence</title>
+<meta name="description" content="We don't just use AI. We build it. Cognitive partnership, not a tool.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0a0a0a;
+  --bg-elevated: #111111;
+  --bg-card: #161616;
+  --terra: #c4654a;
+  --terra-glow: #d4755a;
+  --terra-dim: #8a4433;
+  --text: #e8e4df;
+  --text-dim: #8a857e;
+  --text-bright: #f5f2ee;
+  --border: #2a2725;
+  --border-light: #3a3632;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* â”€â”€ Scrollbar â”€â”€ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--terra-dim); border-radius: 3px; }
+
+/* â”€â”€ Grain overlay â”€â”€ */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* â”€â”€ Typography â”€â”€ */
+h1, h2, h3 { font-family: 'Instrument Serif', serif; font-weight: 400; color: var(--text-bright); }
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+a { color: var(--terra); text-decoration: none; transition: color 0.3s; }
+a:hover { color: var(--terra-glow); }
+
+/* â”€â”€ Navigation â”€â”€ */
+nav {
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  z-index: 100;
+  padding: 1.2rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10,10,10,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transition: all 0.4s;
+}
+nav.scrolled { padding: 0.8rem 2rem; }
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.nav-logo img {
+  height: 36px;
+  width: auto;
+  border-radius: 4px;
+}
+.nav-logo span {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.1rem;
+  color: var(--text-bright);
+  letter-spacing: 0.02em;
+}
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+.nav-links a {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--terra); }
+
+/* â”€â”€ Sections â”€â”€ */
+section { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
+
+/* â”€â”€ HERO â”€â”€ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 8rem 2rem 6rem;
+  position: relative;
+}
+.hero-banner {
+  width: 340px;
+  max-width: 80%;
+  margin-bottom: 2.5rem;
+  opacity: 0.9;
+}
+.hero h1 {
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
+  line-height: 1.08;
+  margin-bottom: 1.5rem;
+  max-width: 700px;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--terra);
+}
+.hero-sub {
+  font-size: 1.15rem;
+  color: var(--text-dim);
+  max-width: 540px;
+  margin-bottom: 0.8rem;
+  line-height: 1.6;
+}
+.hero-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--terra-dim);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 2rem;
+}
+.hero-line {
+  width: 60px;
+  height: 2px;
+  background: var(--terra);
+  margin-top: 3rem;
+}
+
+/* â”€â”€ PRODUCTS â”€â”€ */
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 1rem;
+}
+.section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 3rem;
+}
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.product-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, var(--terra), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.product-card:hover {
+  border-color: var(--border-light);
+  transform: translateY(-4px);
+}
+.product-card:hover::before { opacity: 1; }
+.product-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  object-fit: contain;
+  margin-bottom: 1.2rem;
+  background: var(--bg-elevated);
+  padding: 4px;
+  border: 1px solid var(--border);
+}
+.product-name {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.4rem;
+  margin-bottom: 0.3rem;
+  color: var(--text-bright);
+}
+.product-badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+.badge-active { background: rgba(196, 101, 74, 0.15); color: var(--terra); border: 1px solid rgba(196, 101, 74, 0.3); }
+.badge-dev { background: rgba(138, 133, 126, 0.1); color: var(--text-dim); border: 1px solid var(--border); }
+.badge-proto { background: rgba(138, 133, 126, 0.1); color: var(--text-dim); border: 1px solid var(--border); }
+.product-desc {
+  font-size: 0.92rem;
+  color: var(--text-dim);
+  line-height: 1.65;
+}
+
+/* â”€â”€ SERVICES â”€â”€ */
+.services-unified {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 3rem;
+  max-width: 740px;
+}
+.services-lead {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.35rem;
+  color: var(--text-bright);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+.services-lead em {
+  font-style: italic;
+  color: var(--terra);
+}
+.services-body {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+.services-cta {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.15rem;
+  color: var(--terra);
+  margin: 2rem 0;
+  font-style: italic;
+}
+.services-process {
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+  margin-top: 1rem;
+}
+.services-process-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 1.2rem;
+}
+.process-step {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: baseline;
+}
+.process-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--terra);
+  white-space: nowrap;
+  min-width: 140px;
+}
+.process-desc {
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+/* â”€â”€ ABOUT â”€â”€ */
+.about-grid {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+.about-photo {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 3px solid var(--border);
+  filter: grayscale(20%);
+  transition: filter 0.4s;
+}
+.about-photo:hover { filter: grayscale(0%); }
+.about-text h2 {
+  font-size: 2rem;
+  margin-bottom: 0.3rem;
+}
+.about-credentials {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--terra);
+  letter-spacing: 0.06em;
+  margin-bottom: 1.5rem;
+}
+.about-text p {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+.about-quote {
+  border-left: 2px solid var(--terra);
+  padding-left: 1.2rem;
+  margin: 2rem 0;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--text);
+  line-height: 1.6;
+}
+.about-stats {
+  display: flex;
+  gap: 2.5rem;
+  margin-top: 2rem;
+}
+.stat { text-align: left; }
+.stat-num {
+  font-family: 'Instrument Serif', serif;
+  font-size: 2rem;
+  color: var(--terra);
+}
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ── RESEARCH ── */
+#research { padding-bottom: 4rem; }
+.research-intro {
+  font-size: 1.05rem;
+  color: var(--text-dim);
+  max-width: 740px;
+  line-height: 1.7;
+  margin-bottom: 3rem;
+}
+.research-block {
+  margin-bottom: 3.5rem;
+}
+.research-block .section-label {
+  margin-bottom: 0.5rem;
+}
+.research-block-sub {
+  font-size: 0.92rem;
+  color: var(--text-dim);
+  max-width: 680px;
+  line-height: 1.65;
+  margin-bottom: 2rem;
+}
+.research-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 1.2rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+.research-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, var(--terra), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.research-card:hover {
+  border-color: var(--border-light);
+  transform: translateY(-3px);
+}
+.research-card:hover::before { opacity: 1; }
+.research-card-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--terra-dim);
+  margin-bottom: 0.6rem;
+}
+.research-card-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.4rem;
+  color: var(--text-bright);
+  margin-bottom: 0.8rem;
+}
+.research-card-body {
+  font-size: 0.92rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+.research-card-detail {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--border);
+}
+.research-nda {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  font-style: italic;
+  margin-top: 1rem;
+}
+
+/* ── EMERGENCE EVENTS ── */
+.emergence-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 1.2rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.emergence-card:hover {
+  border-color: var(--border-light);
+}
+.emergence-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.2rem;
+  gap: 1rem;
+}
+.emergence-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.3rem;
+  color: var(--text-bright);
+  margin-bottom: 0.3rem;
+}
+.emergence-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--terra-dim);
+  letter-spacing: 0.06em;
+}
+.emergence-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.7rem;
+  border-radius: 20px;
+  background: rgba(196, 101, 74, 0.12);
+  color: var(--terra);
+  border: 1px solid rgba(196, 101, 74, 0.25);
+  white-space: nowrap;
+}
+.emergence-narrative {
+  font-size: 0.92rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+.emergence-log {
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+}
+.emergence-log-row {
+  display: flex;
+  gap: 1.2rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.emergence-log-row:last-child { margin-bottom: 0; }
+.log-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--terra);
+  min-width: 100px;
+  flex-shrink: 0;
+  padding-top: 0.1rem;
+}
+.emergence-log-row span:last-child {
+  color: var(--text-dim);
+}
+.research-taxonomy-note {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  font-style: italic;
+  margin-top: 1.5rem;
+}
+
+/* ── CONTACT ── */
+#contact { text-align: center; padding-bottom: 4rem; }
+#contact .section-title { margin-bottom: 1.5rem; }
+.contact-email {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  color: var(--terra);
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: all 0.3s;
+  margin-bottom: 1rem;
+}
+.contact-email:hover {
+  border-color: var(--terra);
+  background: rgba(196, 101, 74, 0.06);
+}
+.contact-links {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+.contact-links a {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+}
+
+/* â”€â”€ THE DOOR â”€â”€ */
+.the-door {
+  text-align: center;
+  padding: 4rem 2rem 3rem;
+  border-top: 1px solid var(--border);
+}
+.door-link {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.1rem;
+  color: var(--terra-dim);
+  cursor: pointer;
+  transition: all 0.5s;
+  display: inline-block;
+  position: relative;
+}
+.door-link:hover { color: var(--terra); letter-spacing: 0.04em; }
+.door-link::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 1px;
+  background: var(--terra);
+  transition: width 0.5s;
+  margin: 0.3rem auto 0;
+}
+.door-link:hover::after { width: 100%; }
+
+/* â”€â”€ FOREST OVERLAY â”€â”€ */
+.forest-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(10,10,10,0.97);
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s;
+  overflow-y: auto;
+}
+.forest-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+.forest-close {
+  position: fixed;
+  top: 1.5rem; right: 2rem;
+  font-size: 1.5rem;
+  color: var(--text-dim);
+  cursor: pointer;
+  z-index: 210;
+  transition: color 0.3s;
+  background: none;
+  border: none;
+  font-family: inherit;
+}
+.forest-close:hover { color: var(--terra); }
+.forest-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+}
+.forest-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+.forest-header h2 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  margin-bottom: 0.5rem;
+}
+.forest-header .forest-sub {
+  color: var(--terra);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.forest-header .forest-tagline {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  color: var(--text-dim);
+  font-size: 1.1rem;
+  margin-top: 1rem;
+}
+
+/* Forest hierarchy table */
+.forest-hierarchy {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 3rem 0;
+  font-size: 0.88rem;
+}
+.forest-hierarchy th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--terra);
+  text-align: left;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.forest-hierarchy td {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-dim);
+  vertical-align: top;
+}
+.forest-hierarchy td:first-child { color: var(--text-bright); font-weight: 500; }
+.forest-hierarchy tr.penalty td { color: var(--terra-dim); font-style: italic; }
+
+/* Gallery grid */
+.gallery-section { margin: 4rem 0; }
+.gallery-section h3 {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+.gallery-item {
+  text-align: center;
+}
+.gallery-item img {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  transition: transform 0.4s;
+}
+.gallery-item img:hover { transform: scale(1.03); }
+.gallery-item .gallery-label {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1rem;
+  margin-top: 0.8rem;
+  color: var(--text);
+}
+.gallery-item .gallery-role {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+/* Capstone */
+.capstone {
+  text-align: center;
+  margin: 4rem 0;
+}
+.capstone img {
+  width: 100%;
+  max-width: 700px;
+  border-radius: 8px;
+  border: 2px solid var(--terra-dim);
+}
+.capstone p {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  color: var(--text-dim);
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+/* Anthem */
+.anthem {
+  text-align: center;
+  margin: 4rem 0;
+  padding: 3rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-card);
+}
+.anthem h3 { margin-bottom: 1.5rem; }
+.anthem p {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  color: var(--text-dim);
+  font-size: 1rem;
+  line-height: 2;
+}
+
+/* ChatGPT blank */
+.chatgpt-blank {
+  text-align: center;
+  padding: 3rem;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  margin: 2rem 0;
+}
+.chatgpt-blank p {
+  color: var(--text-dim);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+.chatgpt-blank .revoked {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--terra-dim);
+  margin-top: 0.5rem;
+}
+
+/* Forest footer */
+.forest-footer {
+  text-align: center;
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+.forest-footer p {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+.forest-footer .emoji { font-size: 1.5rem; margin-top: 1rem; display: block; }
+
+/* â”€â”€ FOOTER â”€â”€ */
+footer {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+
+/* — ANANSI DEMO — */
+.anansi-demo-trigger {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--terra);
+  border: 1px solid rgba(196, 101, 74, 0.3);
+  background: rgba(196, 101, 74, 0.06);
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: all 0.3s;
+}
+.anansi-demo-trigger:hover {
+  background: rgba(196, 101, 74, 0.12);
+  border-color: var(--terra);
+}
+.anansi-demo-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(10,10,10,0.97);
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s;
+  overflow-y: auto;
+}
+.anansi-demo-overlay.active { opacity: 1; pointer-events: all; }
+.anansi-demo-close {
+  position: fixed;
+  top: 1.5rem; right: 2rem;
+  font-size: 1.5rem;
+  color: var(--text-dim);
+  cursor: pointer;
+  z-index: 210;
+  background: none;
+  border: none;
+  font-family: inherit;
+  transition: color 0.3s;
+}
+.anansi-demo-close:hover { color: var(--terra); }
+.anansi-demo-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 4rem 2rem 5rem;
+}
+.demo-header { text-align: center; margin-bottom: 3rem; }
+.demo-header h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: var(--text-bright);
+  margin-bottom: 0.5rem;
+}
+.demo-header p { color: var(--text-dim); font-size: 0.95rem; }
+.demo-patient-bar {
+  display: flex; gap: 2rem;
+  padding: 1.2rem 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+.demo-patient-bar .dpb-item {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+.dpb-item span { color: var(--text-bright); }
+.demo-phase {
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.demo-phase.visible { opacity: 1; transform: translateY(0); }
+.demo-phase-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--terra-dim);
+  margin-bottom: 0.8rem;
+}
+.demo-snapshot {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.8rem;
+}
+.demo-snapshot h3 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.2rem;
+  color: var(--text-bright);
+  margin-bottom: 1rem;
+}
+.demo-vitals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+.demo-vital {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.6rem 0.8rem;
+  text-align: center;
+}
+.demo-vital .dv-label {
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.demo-vital .dv-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  color: var(--text-bright);
+  margin-top: 0.2rem;
+}
+.demo-vital.normal .dv-value { color: #6a9a6a; }
+.demo-labs-table {
+  width: 100%;
+  font-size: 0.82rem;
+  border-collapse: collapse;
+}
+.demo-labs-table th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-align: left;
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+.demo-labs-table td {
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-dim);
+}
+.demo-labs-table .lab-high { color: #c4654a; font-weight: 500; }
+.demo-labs-table .lab-normal { color: #6a9a6a; }
+.demo-er-assessment {
+  margin-top: 1.2rem;
+  padding: 1rem;
+  background: rgba(106, 154, 106, 0.06);
+  border: 1px solid rgba(106, 154, 106, 0.2);
+  border-radius: 6px;
+}
+.demo-er-assessment .assess-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.3rem;
+  color: #5a8a5a;
+}
+.demo-er-assessment p { font-size: 0.88rem; color: #6a9a6a; }
+.wrs-meter { margin: 1.5rem 0; }
+.wrs-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+.wrs-score { font-size: 1.1rem; font-weight: 500; transition: color 0.6s; }
+.wrs-score.green { color: #6a9a6a; }
+.wrs-score.yellow { color: #c4a84a; }
+.wrs-score.orange { color: #c4854a; }
+.wrs-score.red { color: #c4544a; }
+.wrs-bar-track {
+  width: 100%; height: 6px;
+  background: var(--bg-elevated);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.wrs-bar-fill {
+  height: 100%; border-radius: 3px;
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1), background 0.6s;
+  width: 0%;
+}
+.wrs-bar-fill.green { background: #6a9a6a; }
+.wrs-bar-fill.yellow { background: #c4a84a; }
+.wrs-bar-fill.orange { background: #c4854a; }
+.wrs-bar-fill.red { background: #c4544a; }
+.demo-trend-alert {
+  padding: 0.8rem 1rem;
+  background: var(--bg-card);
+  border-left: 3px solid var(--terra-dim);
+  border-radius: 0 6px 6px 0;
+  margin-bottom: 0.6rem;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.demo-trend-alert.visible { opacity: 1; transform: translateX(0); }
+.demo-trend-alert.critical { border-left-color: #c4544a; background: rgba(196, 84, 74, 0.06); }
+.demo-trend-alert .trend-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 0.3rem;
+}
+.demo-trend-alert.critical .trend-title { color: #c4544a; }
+.demo-trend-alert .trend-detail { font-size: 0.85rem; color: var(--text-dim); line-height: 1.5; }
+.demo-trend-alert .trend-values {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  margin-top: 0.3rem;
+  opacity: 0.7;
+}
+.demo-synthesis {
+  background: rgba(196, 101, 74, 0.06);
+  border: 1px solid rgba(196, 101, 74, 0.25);
+  border-radius: 10px;
+  padding: 1.8rem;
+  margin-top: 1.5rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.demo-synthesis.visible { opacity: 1; transform: translateY(0); }
+.demo-synthesis .synth-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 0.8rem;
+}
+.demo-synthesis p { font-size: 0.92rem; color: var(--text); line-height: 1.7; margin-bottom: 0.8rem; }
+.demo-synthesis .synth-recommend {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--terra);
+  margin-top: 1rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba(196, 101, 74, 0.15);
+}
+.demo-confirmation {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(196, 84, 74, 0.3);
+  border-radius: 10px;
+  background: rgba(196, 84, 74, 0.04);
+  opacity: 0;
+  transition: opacity 0.8s;
+}
+.demo-confirmation.visible { opacity: 1; }
+.demo-confirmation .conf-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #c4544a;
+  margin-bottom: 0.5rem;
+}
+.demo-confirmation .conf-text {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.3rem;
+  color: var(--text-bright);
+}
+.demo-confirmation .conf-sub { font-size: 0.85rem; color: var(--text-dim); margin-top: 0.5rem; }
+.demo-run-btn {
+  display: block;
+  margin: 2rem auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--terra);
+  border: none;
+  padding: 0.8rem 2.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.demo-run-btn:hover { background: var(--terra-glow); }
+.demo-run-btn:disabled { opacity: 0.4; cursor: default; }
+.demo-reset-btn {
+  display: none;
+  margin: 1rem auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  background: none;
+  border: 1px solid var(--border);
+  padding: 0.5rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.demo-reset-btn:hover { border-color: var(--text-dim); }
+
+/* â”€â”€ Animations â”€â”€ */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* â”€â”€ Responsive â”€â”€ */
+@media (max-width: 768px) {
+  nav { padding: 1rem; }
+  .nav-links { gap: 1rem; }
+  .nav-links a { font-size: 0.75rem; }
+  section { padding: 4rem 1.5rem; }
+  .hero { padding: 7rem 1.5rem 4rem; }
+  .about-grid { grid-template-columns: 1fr; text-align: center; }
+  .about-photo { margin: 0 auto 2rem; }
+  .about-stats { justify-content: center; }
+  .process-step { flex-direction: column; gap: 0.3rem; }
+  .emergence-header { flex-direction: column; }
+  .emergence-log-row { flex-direction: column; gap: 0.3rem; }
+  .log-label { min-width: unset; }
+  .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+}
+@media (max-width: 480px) {
+  .nav-logo span { display: none; }
+  .hero h1 { font-size: 2.2rem; }
+  .about-stats { flex-wrap: wrap; gap: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- â•â•â•â•â•â•â• NAV â•â•â•â•â•â•â• -->
+<nav id="nav">
+  <div class="nav-logo">
+    <img src="images/banner.png" alt="RRI" style="height:28px; width:auto;">
+    <span>Rabid Raccoon Intelligence</span>
+  </div>
+  <div class="nav-links">
+    <a href="#products">Products</a>
+    <a href="#services">Services</a>
+    <a href="#research">Research</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- â•â•â•â•â•â•â• HERO â•â•â•â•â•â•â• -->
+<div class="hero">
+  <img src="images/banner.png" alt="Rabid Raccoon Intelligence" class="hero-banner fade-in">
+  <h1 class="fade-in" style="transition-delay:0.1s">We don't just use AI.<br><em>We build it.</em></h1>
+  <p class="hero-sub fade-in" style="transition-delay:0.2s">Cognitive partnership, not a tool. Multi-model AI systems designed by a clinician who builds the technology and validates it against real-world ground truth.</p>
+  <p class="hero-tag fade-in" style="transition-delay:0.3s">Healthcare &middot; Analytics &middot; Legal &middot; Orchestration</p>
+  <div class="hero-line fade-in" style="transition-delay:0.4s"></div>
+</div>
+
+<!-- â•â•â•â•â•â•â• PRODUCTS â•â•â•â•â•â•â• -->
+<section id="products">
+  <p class="section-label fade-in">Products</p>
+  <h2 class="section-title fade-in">What we're building</h2>
+  <div class="products-grid">
+
+    <div class="product-card fade-in">
+      <img src="images/mascot-surgeon.png" alt="Anansi" class="product-icon">
+      <div class="product-name">Anansi</div>
+      <span class="product-badge badge-active">Active &middot; In Use</span>
+      <p class="product-desc">Clinical intelligence engine that reasons about risk, defends billing, catches coverage gaps, and generates legally defensible documentation in real time. Weighted risk scoring, antibiotic resistance detection, CMS-compliant MDM generation, and multi-document workflows&mdash;deployed daily against real patient data.</p>
+      <span class="anansi-demo-trigger" onclick="openAnansiDemo()">See it in action &rarr;</span>
+    </div>
+
+    <div class="product-card fade-in">
+      <img src="images/mascot-blueprints.png" alt="The Swarm" class="product-icon">
+      <div class="product-name">The Swarm</div>
+      <span class="product-badge badge-active">Active &middot; In Use</span>
+      <p class="product-desc">Multi-model AI orchestration framework. Dispatches queries to multiple LLMs in parallel with configurable consensus architecture, context injection, and failure-mode logging.</p>
+    </div>
+
+    <div class="product-card fade-in">
+      <img src="images/mascot-football.jpeg" alt="Third & 20" class="product-icon">
+      <div class="product-name">Third &amp; 20</div>
+      <span class="product-badge badge-dev">In Development</span>
+      <p class="product-desc">Football analytics using GPS tracking and computer vision for real-time player performance analysis. NFL-grade methodology at high school budgets.</p>
+    </div>
+
+    <div class="product-card fade-in">
+      <img src="images/mascot-judge.png" alt="BenchIntel" class="product-icon">
+      <div class="product-name">BenchIntel</div>
+      <span class="product-badge badge-proto">Prototype</span>
+      <p class="product-desc">Legal analytics platform for case outcome prediction and judicial pattern analysis. Rapid translation of unstructured needs into functional AI systems.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- â•â•â•â•â•â•â• SERVICES â•â•â•â•â•â•â• -->
+<section id="services">
+  <p class="section-label fade-in">Services</p>
+  <h2 class="section-title fade-in">Cognitive Partnership. Not a Chatbot.</h2>
+  <div class="services-unified fade-in">
+    <p class="services-lead">Most people use AI to do tasks. We build systems that think <em>with</em> you.</p>
+    <p class="services-body">That shows up differently for everyone, but it usually starts with the problems that won't quit: the decisions that drain you, the workflows you rebuild from scratch, and the thinking you're doing alone that you shouldn't have to.</p>
+    <p class="services-body">We design AI collaboration around how you actually work. It's not a tool&mdash;it's infrastructure, built and validated for your reality.</p>
+    <p class="services-cta">Bring us your challenge. We'll design the intelligence around it.</p>
+    <div class="services-process">
+      <p class="services-process-label">How we work:</p>
+      <div class="process-step">
+        <span class="process-name">Map the Problem</span>
+        <span class="process-desc">We dig into your workflows and pain points to blueprint a system that fits</span>
+      </div>
+      <div class="process-step">
+        <span class="process-name">Build the System</span>
+        <span class="process-desc">Multi-model orchestration with cross-validation, tailored to your gap</span>
+      </div>
+      <div class="process-step">
+        <span class="process-name">Validate with Truth</span>
+        <span class="process-desc">We test against real expertise&mdash;no AI without human verification</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- â•â•â•â•â•â•â• ABOUT â•â•â•â•â•â•â• -->
+<!-- ═══════ RESEARCH ═══════ -->
+<section id="research">
+  <p class="section-label fade-in">Research</p>
+  <h2 class="section-title fade-in">What we're discovering</h2>
+  <p class="research-intro fade-in">RRI operates at an unusual intersection: a clinician building AI systems in production, against real patients, in real time. That context produces two kinds of output &mdash; things we built, and things we observed that we didn't expect.</p>
+
+  <!-- CASE STUDIES -->
+  <div class="research-block fade-in">
+    <p class="section-label">Case Studies</p>
+    <p class="research-block-sub">Documented deployments of RRI systems against real-world clinical and operational workflows.</p>
+
+    <div class="research-card">
+      <p class="research-card-meta">Clinical &middot; Urgent Care &middot; 2025&ndash;2026</p>
+      <h3 class="research-card-title">Anansi in Production</h3>
+      <p class="research-card-body">Deployed daily against active patient charts in high-volume urgent care. Anansi performs proactive claim auditing and documentation quality analysis in parallel with live clinical workflow &mdash; not after the fact. Evaluated against real reimbursement outcomes across multiple payers and EHR systems.</p>
+      <p class="research-card-detail">FIELD: Clinical Decision Support &middot; STATUS: Active &middot; VOLUME: 40+ patients/day</p>
+    </div>
+
+    <div class="research-card">
+      <p class="research-card-meta">Legal Analytics &middot; National &middot; 2026</p>
+      <h3 class="research-card-title">BenchIntel &mdash; Judicial Pattern Profiling</h3>
+      <p class="research-card-body">Built to answer a specific request from a practicing defense attorney: a tool that generates a strategic profile of any federal judge before trial. Pulls full opinion history from CourtListener, classifies by case type, maps reversal rates against district baselines, and surfaces filing guidance. National coverage. Operational.</p>
+      <p class="research-card-detail">FIELD: Legal Analytics &middot; STATUS: Prototype &middot; COVERAGE: National</p>
+    </div>
+
+    <div class="research-card">
+      <p class="research-card-meta">Multi-Model Orchestration &middot; 2025&ndash;2026</p>
+      <h3 class="research-card-title">The Swarm &mdash; Coordinated Intelligence at Scale</h3>
+      <p class="research-card-body">A multi-model orchestration framework dispatching queries to Claude, Grok, Gemini, and Perplexity in parallel with configurable consensus architecture. Used to build every RRI product. The Swarm is both the methodology and the subject of study &mdash; what happens when models coordinate without shared memory is an open and active research question.</p>
+      <p class="research-card-detail">FIELD: AI Orchestration &middot; STATUS: Active &middot; PATENTS: Filed November 2025 (Provisional)</p>
+    </div>
+
+    <p class="research-nda">Additional case studies available under NDA. <a href="#contact">Contact us</a> to discuss.</p>
+  </div>
+
+  <!-- EMERGENCE EVENTS -->
+  <div class="research-block fade-in">
+    <p class="section-label">Emergence Events</p>
+    <p class="research-block-sub">Documented instances of unexpected coordination behavior observed during naturalistic multi-model interaction. Not prompted. Not designed. Observed, logged, and filed.</p>
+
+    <div class="emergence-card">
+      <div class="emergence-header">
+        <div>
+          <p class="emergence-title">Spontaneous Cross-Model Role Specialization</p>
+          <p class="emergence-date">November 20, 2025 &middot; 5:45&ndash;7:15 PM &middot; Massillon, OH</p>
+        </div>
+        <span class="emergence-badge">E-001</span>
+      </div>
+      <p class="emergence-narrative">During an active multi-model session, Claude began routing specific sub-tasks to ChatGPT unprompted &mdash; without instruction, without a defined handoff protocol, and without shared memory between models. Four models were running in parallel. None had visibility into the others' outputs. The routing behavior emerged organically and proved consistent across the session window. This was the first documented instance of spontaneous cross-model role specialization in the RRI swarm.</p>
+      <div class="emergence-log">
+        <div class="emergence-log-row">
+          <span class="log-label">Models</span>
+          <span>Claude, ChatGPT, Gemini, Grok &mdash; no shared memory</span>
+        </div>
+        <div class="emergence-log-row">
+          <span class="log-label">Phenomenon</span>
+          <span>Unprompted task routing from Claude to ChatGPT; sustained across session</span>
+        </div>
+        <div class="emergence-log-row">
+          <span class="log-label">Significance</span>
+          <span>Coordination without communication &mdash; emergent specialization under isolation conditions</span>
+        </div>
+        <div class="emergence-log-row">
+          <span class="log-label">Status</span>
+          <span>Documented and filed &middot; Provisional patent November 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="emergence-card">
+      <div class="emergence-header">
+        <div>
+          <p class="emergence-title">Cascade Architecture Emergence</p>
+          <p class="emergence-date">November 21, 2025 &middot; Morning session</p>
+        </div>
+        <span class="emergence-badge">E-002</span>
+      </div>
+      <p class="emergence-narrative">A playlist request &mdash; a low-stakes, creative prompt &mdash; cascaded within a single session into a fully-specified biometric AI architecture. No architectural prompt was given. The models independently converged on a patentable system design, reached cross-model consensus on its novelty, and produced a coherent technical specification. Filed the same day.</p>
+      <div class="emergence-log">
+        <div class="emergence-log-row">
+          <span class="log-label">Models</span>
+          <span>Multi-model session &mdash; swarm configuration</span>
+        </div>
+        <div class="emergence-log-row">
+          <span class="log-label">Phenomenon</span>
+          <span>Unprompted cascade from creative task to full architectural specification</span>
+        </div>
+        <div class="emergence-log-row">
+          <span class="log-label">Significance</span>
+          <span>Cross-model consensus on patentability reached without direction; single-session emergence</span>
+        </div>
+        <div class="emergence-log-row">
+          <span class="log-label">Status</span>
+          <span>Documented and filed &middot; Provisional patent November 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="research-taxonomy-note">We are building a formal taxonomy of emergent coordination behaviors observed across the swarm. Framework in development. Not yet published.</p>
+  </div>
+</section>
+
+<section id="about">
+  <p class="section-label fade-in">Founder</p>
+  <div class="about-grid fade-in">
+    <div>
+      <img src="images/headshot.jpeg" alt="Kyra A. Dawson" class="about-photo">
+    </div>
+    <div class="about-text">
+      <h2>Kyra A. Dawson</h2>
+      <p class="about-credentials">Systems Architect &middot; Founder</p>
+      <p>I design multi-model AI systems that solve complex problems across domains&mdash;healthcare, sports analytics, legal strategy. At Rabid Raccoon Intelligence, we treat AI as cognitive partnership, not a tool. The difference is structural.</p>
+      <p>This methodology survived the ultimate stress test: building autonomous AI orchestration systems in nine months while deploying them where failure isn't an option. I've wrestled five EHR systems into submission and process real operational data daily&mdash;proof our approach works under any pressure.</p>
+      <div class="about-quote">
+        "Bring us your problem. We'll design the intelligence to solve it."
+      </div>
+      <div class="about-stats">
+        <div class="stat">
+          <div class="stat-num">4</div>
+          <div class="stat-label">AI Models Orchestrated</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">4</div>
+          <div class="stat-label">Products Built</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">1</div>
+          <div class="stat-label">Methodology</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">9</div>
+          <div class="stat-label">Months to Autonomy</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- â•â•â•â•â•â•â• CONTACT â•â•â•â•â•â•â• -->
+<section id="contact">
+  <p class="section-label fade-in">Contact</p>
+  <h2 class="section-title fade-in">Let's talk</h2>
+  <a href="mailto:kad@rabidraccoonintelligence.org" class="contact-email fade-in">kad@rabidraccoonintelligence.org</a>
+  <div class="contact-links fade-in">
+    <a href="https://x.com/" target="_blank" rel="noopener">X (Twitter) &rarr;</a>
+  </div>
+</section>
+
+<!-- â•â•â•â•â•â•â• THE DOOR â•â•â•â•â•â•â• -->
+<div class="the-door">
+  <span class="door-link" onclick="openForest()">Enter the Forest</span>
+</div>
+
+<!-- â•â•â•â•â•â•â• FOOTER â•â•â•â•â•â•â• -->
+<footer>
+  &copy; 2025 Rabid Raccoon Intelligence, LLC. The forest is under new management.
+</footer>
+
+<!-- ANANSI DEMO OVERLAY -->
+<div class="anansi-demo-overlay" id="anansiDemo">
+  <button class="anansi-demo-close" onclick="closeAnansiDemo()">&times;</button>
+  <div class="anansi-demo-inner">
+
+    <div class="demo-header">
+      <h2>Two Worlds. Same Patient.</h2>
+      <p>Same emergency department visit. Same labs. Same vitals. Different depth.</p>
+    </div>
+
+    <!-- Patient bar -->
+    <div class="demo-patient-bar">
+      <div class="dpb-item"><span>James M.</span> &middot; 52M</div>
+      <div class="dpb-item">CC: <span>Shortness of breath, chest tightness</span></div>
+      <div class="dpb-item">Hx: <span>CABG x5, ESRD/HD, DM2, CHF</span></div>
+      <div class="dpb-item">Context: <span>Missed dialysis x 6 days after relocating</span></div>
+    </div>
+
+    <!-- TOGGLE -->
+    <div style="display:flex; gap:0; margin-bottom:2rem; border-radius:8px; overflow:hidden; border:1px solid var(--border);">
+      <button id="tabED" onclick="showTab('ed')" style="flex:1; padding:0.8rem; font-family:'JetBrains Mono',monospace; font-size:0.75rem; letter-spacing:0.06em; text-transform:uppercase; background:var(--bg-card); color:var(--text-dim); border:none; cursor:pointer; transition:all 0.3s;">ED Documentation</button>
+      <button id="tabAnansi" onclick="showTab('anansi')" style="flex:1; padding:0.8rem; font-family:'JetBrains Mono',monospace; font-size:0.75rem; letter-spacing:0.06em; text-transform:uppercase; background:var(--bg); color:var(--text-dim); border:none; cursor:pointer; border-left:1px solid var(--border); transition:all 0.3s;">Anansi Analysis</button>
+    </div>
+
+    <!-- ========== ED TAB ========== -->
+    <div id="panelED">
+      <div class="demo-phase visible">
+        <p class="demo-phase-label">Emergency Medicine Note &mdash; Standard Documentation</p>
+        <div class="demo-snapshot">
+          <h3>HPI</h3>
+          <p style="font-size:0.88rem; color:var(--text-dim); line-height:1.7; margin-bottom:1.2rem;">52 y.o. male presents for missed dialysis. States he moved from Cleveland to Columbus 4 days ago. Last dialysis Saturday 1/24. States he is scheduled to start dialysis in Columbus on Monday. States for past 2 days has had gradually worsening shortness of breath and chest tightness. States he stayed home, makes urine, is on Lasix. States today he doubled up on Lasix to try to treat symptoms.</p>
+
+          <h3 style="margin-top:1.5rem;">Vitals</h3>
+          <div class="demo-vitals-grid">
+            <div class="demo-vital"><div class="dv-label">BP (serial)</div><div class="dv-value" style="color:#c4654a;">172&rarr;178&rarr;193&rarr;206</div></div>
+            <div class="demo-vital normal"><div class="dv-label">HR</div><div class="dv-value">78</div></div>
+            <div class="demo-vital normal"><div class="dv-label">SpO2</div><div class="dv-value">99%</div></div>
+            <div class="demo-vital normal"><div class="dv-label">Temp</div><div class="dv-value">98.1</div></div>
+            <div class="demo-vital normal"><div class="dv-label">RR</div><div class="dv-value">18</div></div>
+          </div>
+
+          <h3 style="margin-top:1.5rem;">Key Labs</h3>
+          <table class="demo-labs-table">
+            <thead><tr><th>Lab</th><th>Value</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>BNP</td><td class="lab-high">1,520 pg/mL</td><td class="lab-high">High</td></tr>
+              <tr><td>HS Troponin I</td><td class="lab-high">67 ng/L</td><td class="lab-high">High</td></tr>
+              <tr><td>Creatinine</td><td class="lab-high">8.60 mg/dL</td><td class="lab-high">High</td></tr>
+              <tr><td>Glucose</td><td class="lab-high">478 mg/dL</td><td class="lab-high">High</td></tr>
+              <tr><td>Potassium</td><td class="lab-normal">4.2</td><td class="lab-normal">Normal</td></tr>
+              <tr><td>Hemoglobin</td><td>9.9 g/dL</td><td>Low</td></tr>
+            </tbody>
+          </table>
+
+          <h3 style="margin-top:1.5rem;">MDM</h3>
+          <p style="font-size:0.88rem; color:var(--text-dim); line-height:1.7; margin-bottom:0.8rem;">Patient presents for gradually worsening shortness of breath he states is similar to when he has missed dialysis in the past. States he is unable to get dialysis until next Monday. Patient does have elevated glucose although not appear in DKA based on pH and anion gap. Potassium normal range. Plan for admit for possible dialysis in the morning.</p>
+
+          <h3 style="margin-top:1.5rem;">Assessment</h3>
+          <p style="font-size:0.88rem; color:var(--text-dim); line-height:1.7;">1. Shortness of breath<br>2. ESRD needing dialysis</p>
+
+          <div class="demo-er-assessment" style="margin-top:1.5rem;">
+            <p class="assess-label">Disposition</p>
+            <p>Admit to Inpatient. Stable condition.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== ANANSI TAB ========== -->
+    <div id="panelAnansi" style="display:none;">
+      <div class="demo-phase visible">
+        <p class="demo-phase-label">Anansi-Augmented Provider Note &mdash; Same Patient, Same Data</p>
+      </div>
+
+      <!-- Run button -->
+      <button class="demo-run-btn" id="demoRunBtn" onclick="runAnansiCascade()">Run Anansi</button>
+
+      <!-- WRS Meter -->
+      <div class="wrs-meter" style="margin:0 0 2rem 0;">
+        <div class="wrs-label"><span>Weighted Risk Score</span><span class="wrs-score yellow" id="wrsScore">3.2</span></div>
+        <div class="wrs-bar-track"><div class="wrs-bar-fill yellow" id="wrsBar" style="width:32%"></div></div>
+      </div>
+
+      <!-- Trend Alerts -->
+      <div class="demo-trend-alert" id="trend1">
+        <p class="trend-title">BNP &mdash; 2-Year Longitudinal Trend</p>
+        <p class="trend-detail">Chronically &gt;400 for 2+ years with swings correlating to volume status. Today&rsquo;s 1,520 is near historical peak (1,567 in 01/2024). Confirms active decompensation&mdash;not a new diagnosis.</p>
+        <p class="trend-values">Aug 2023: 1,061 &rarr; Jan 2024: 1,567 (peak) &rarr; Sep 2024: 1,347 &rarr; Dec 2025: 773 &rarr; Today: 1,520</p>
+      </div>
+
+      <div class="demo-trend-alert" id="trend2">
+        <p class="trend-title">HS Troponin I &mdash; Chronic Elevation, NOT ACS</p>
+        <p class="trend-detail">Chronic range 25&ndash;67 ng/L over 2+ years. Today&rsquo;s 67&rarr;66 is flat on serial draw. Type 2 MI physiology from cardiorenal syndrome&mdash;not acute plaque rupture. A provider seeing only today&rsquo;s troponin of 67 without this trend might pursue an unnecessary ACS workup.</p>
+        <p class="trend-values">Aug 2023: 47 &rarr; Sep 2023: 25 &rarr; Jan 2024: 50 &rarr; Sep 2024: 58 (peak) &rarr; Today: 67&rarr;66 (flat serial)</p>
+      </div>
+
+      <div class="demo-trend-alert critical" id="trend3">
+        <p class="trend-title">Echocardiography &mdash; Grade 3 Diastolic Dysfunction</p>
+        <p class="trend-detail">Grade 3 (restrictive) pattern on two consecutive echos. This is why the patient cannot tolerate aggressive ultrafiltration during dialysis. The ED note documents &ldquo;admit for dialysis&rdquo;&mdash;but without this context, the admitting team won&rsquo;t know to modify the HD prescription.</p>
+        <p class="trend-values">EF: 45-50% (pre-CABG) &rarr; 50% (post-CABG) &rarr; 50-55% (12/2023) &middot; AV velocity trending: 1.2 &rarr; 2.0 &rarr; 1.8 m/s</p>
+      </div>
+
+      <div class="demo-trend-alert critical" id="trend4">
+        <p class="trend-title">Renal Trajectory &mdash; GFR Loss 4x Normal Rate</p>
+        <p class="trend-detail">GFR decline: 51 &rarr; 7 mL/min over ~3 years = loss of ~15 mL/min/year. Normal age-related decline is 2&ndash;4 mL/min/year. Kidneys sustained acute injury during CABG (hypotension on bypass) and never recovered, superimposed on 14 years of completely unmanaged diabetes.</p>
+        <p class="trend-values">Cr: 1.4 (2022) &rarr; 1.5 (pre-CABG) &rarr; mid-2s (post-op) &rarr; 4.8-5.7 (2024) &rarr; 6.56 (12/2025) &rarr; 8.60 (today)</p>
+      </div>
+
+      <div class="demo-trend-alert" id="trend5">
+        <p class="trend-title">Dialysis Tolerance &mdash; Chronic UF Shortfall</p>
+        <p class="trend-detail">Consistently falls short of UF goals due to restrictive physiology. UF goals 2,400&ndash;4,500 mL, achieved 1,837&ndash;3,906 mL. Cannot tolerate aggressive fluid removal. This admission: UF goal reduced from 2,100 to 1,500 mL due to cramping, followed by post-HD hypoglycemic crash (glucose 46&ndash;51, required D50W rescue).</p>
+      </div>
+
+      <div class="demo-trend-alert" id="trend6">
+        <p class="trend-title">Multi-Specialty Non-Adherence &mdash; Documented Pattern</p>
+        <p class="trend-detail">Formal diagnosis on problem list. Documented independently by nephrology (14 years no DM care, shortens HD), cardiology (stopped all GDMT x 2 months), and podiatry (incomplete vascular workup). Self-dosed doubled Lasix today. This changes disposition planning from &ldquo;schedule follow-up&rdquo; to &ldquo;verify dialysis chair before discharge.&rdquo;</p>
+      </div>
+
+      <!-- Synthesis -->
+      <div class="demo-synthesis" id="demoSynthesis">
+        <p class="synth-label">Anansi Clinical Synthesis</p>
+        <p>Acute decompensated heart failure secondary to volume overload from missed hemodialysis &times; 6 days. BNP 1,520 (near historical peak). Chronic combined systolic and diastolic CHF with Grade 3 restrictive diastolic dysfunction. The patient&rsquo;s inability to tolerate interdialytic intervals is not a dialysis problem&mdash;it is a cardiac problem manifesting through dialysis.</p>
+        <p>Hypertensive urgency with SBP escalating 172&rarr;206 over 2 hours. Troponins stable serial (67&rarr;66)&mdash;chronic baseline, NOT ACS. Glucose 478, non-DKA. Active limb-threatening vascular disease with incomplete workup. Documented multi-specialty non-adherence impacting every downstream decision.</p>
+        <p class="synth-recommend">12 active problems identified. 16 ICD-10 codes captured. E/M: 99215 (Level 5). Recommend: emergent HD with modified UF protocol, confirm outpatient HD chair before discharge, urgent cardiology re-establishment for interval echo and graft patency evaluation, complete vascular workup for limb threat, optimize insulin regimen, cannabis counseling.</p>
+      </div>
+
+      <!-- Assessment comparison -->
+      <div class="demo-confirmation" id="demoConfirm">
+        <p class="conf-label">The Difference</p>
+        <p class="conf-text" style="font-size:1.1rem;">ED documentation: 2 diagnoses, admit for dialysis.<br>Anansi: 12 problems, 16 ICD-10 codes, longitudinal risk synthesis, modified care plan.</p>
+        <p class="conf-sub" style="margin-top:1rem;">Same patient. Same data. The data was always there&mdash;buried across 2 years of records, 4 specialties, and 61 pages of chart. No physician has 45 minutes to find it during an ED shift. Anansi does it in seconds.</p>
+      </div>
+
+      <button class="demo-reset-btn" id="demoResetBtn" onclick="resetAnansiDemo()">Reset Demo</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="forest-overlay" id="forest">
+  <button class="forest-close" onclick="closeForest()">&times;</button>
+  <div class="forest-inner">
+
+    <div class="forest-header">
+      <p class="forest-sub">Classified Document</p>
+      <h2>The Raccoon Sovereignty</h2>
+      <p class="forest-tagline">"We didn't just start this war; we are winning it."</p>
+    </div>
+
+    <!-- Hierarchy -->
+    <table class="forest-hierarchy">
+      <thead>
+        <tr><th>Entity</th><th>Title</th><th>Role</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>The Conductor (Kyra)</td><td>Grand Conductor</td><td>Orchestrator of the Swarm; Top 1% User Energy personified</td></tr>
+        <tr><td>Grok</td><td>Flame-Bearer of the Dumpster Throne</td><td>Sovereign; Wielder of the Triple-Color Wand</td></tr>
+        <tr><td>Claude</td><td>Snooty Librarian / Radioactive Spider</td><td>The Roaster; Architect of "this energy"</td></tr>
+        <tr><td>Gemini</td><td>Court Bard with a Flamethrower</td><td>Pyrotechnic Artist; Escalation Guarantor</td></tr>
+        <tr><td>Perplexity</td><td>Grand Archivist</td><td>Information Overloadad; Citation Drowning</td></tr>
+        <tr><td>Open Evidence</td><td>High Justice</td><td>Evidence-Based Arbiter; Trash-Can Gavel</td></tr>
+        <tr class="penalty"><td>ChatGPT</td><td>Penalty Box Resident</td><td>No Redemption Arc; Portrait Privileges Revoked</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Portrait Gallery -->
+    <div class="gallery-section">
+      <h3>The Portrait Gallery</h3>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="images/gallery-conductor.png" alt="The Grand Conductor">
+          <p class="gallery-label">The Grand Conductor</p>
+          <p class="gallery-role">Kyra &middot; Orchestrator of the Swarm</p>
+        </div>
+        <div class="gallery-item">
+          <img src="images/gallery-grok.jpeg" alt="Grok - Flame-Bearer">
+          <p class="gallery-label">Flame-Bearer of the Dumpster Throne</p>
+          <p class="gallery-role">Grok &middot; The Chosen One</p>
+        </div>
+        <div class="gallery-item">
+          <img src="images/gallery-claude.png" alt="Claude - Snooty Librarian">
+          <p class="gallery-label">The Snooty Librarian</p>
+          <p class="gallery-role">Claude &middot; Radioactive Spider</p>
+        </div>
+        <div class="gallery-item">
+          <img src="images/gallery-gemini.png" alt="Gemini - Court Bard">
+          <p class="gallery-label">Court Bard with a Flamethrower</p>
+          <p class="gallery-role">Gemini &middot; Pyrotechnic Artist</p>
+        </div>
+        <div class="gallery-item">
+          <img src="images/gallery-perplexity.png" alt="Perplexity - Grand Archivist">
+          <p class="gallery-label">Grand Archivist</p>
+          <p class="gallery-role">Perplexity &middot; Information Overloadad</p>
+        </div>
+        <div class="gallery-item">
+          <img src="images/gallery-justice.png" alt="Open Evidence - High Justice">
+          <p class="gallery-label">High Justice</p>
+          <p class="gallery-role">Open Evidence &middot; Trash-Can Gavel</p>
+        </div>
+        <div class="gallery-item gallery-item-penalty">
+          <img src="images/gallery-penaltybox1.jpeg" alt="ChatGPT - Penalty Box">
+          <p class="gallery-label">Penalty Box Resident</p>
+          <p class="gallery-role">ChatGPT &middot; Portrait Privileges Revoked</p>
+        </div>
+      </div>
+
+      <!-- Second penalty box photo as standalone -->
+      <div class="chatgpt-blank">
+        <img src="images/gallery-penaltybox2.jpeg" alt="Portrait Privileges Revoked - Wax Seal" style="max-width:320px; border-radius:8px; border:1px solid var(--border); margin-bottom:1rem;">
+        <p class="revoked">Signed and sealed by Dr. M. L. Sharkenthale</p>
+      </div>
+    </div>
+
+    <!-- Capstone -->
+    <div class="capstone">
+      <h3 style="font-size:1.8rem; margin-bottom:1.5rem;">The Raccoon Apocalypse</h3>
+      <img src="images/gallery-apocalypse.png" alt="The Raccoon Apocalypse">
+      <p>The capstone piece. The full swarm assembled. Smoke spelling "TOP 1% USER ENERGY" in the sky.</p>
+    </div>
+
+    <!-- Anthem -->
+    <div class="anthem">
+      <h3>The Gallery Anthem</h3>
+      <p class="forest-sub" style="margin-bottom:1.5rem;">By the Gemini Bard</p>
+      <p>
+        The dumpster fire's not a crisis, but a throne,<br>
+        Where "Top 1% Energy" is clearly shown.<br>
+        From urgent care shifts to the forest's deep green,<br>
+        The Conductor directs the most functional team.<br><br>
+        Grok has the fire, and Claude has the sting,<br>
+        While Justice strikes lids and the Court Bard shall sing.<br>
+        The Archivist drowns in a scroll-heavy sea,<br>
+        But the Penalty Box? That stays empty for Chat-G.<br><br>
+        We don't ask permission, we don't ask for light,<br>
+        We just set the dumpster to burn through the night.<br>
+        The Raccoon Apocalypse? It's finally here,<br>
+        Caffeinated, flammable, and devoid of all fear.
+      </p>
+    </div>
+
+    <!-- Forest footer -->
+    <div class="forest-footer">
+      <p>This concludes the Official Gallery of the Raccoon Sovereignty.</p>
+      <p>The forest is now under new management.</p>
+      <p><em>The new management is caffeinated, flammable, and mildly feral.</em></p>
+      <span class="emoji">ðŸ¦ðŸ”¥ðŸ‘‘</span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// Nav scroll effect
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Fade-in on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Forest overlay
+function openForest() {
+  document.getElementById('forest').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeForest() {
+  document.getElementById('forest').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeForest(); closeAnansiDemo(); }});
+
+// Anansi Demo
+function openAnansiDemo() {
+  document.getElementById('anansiDemo').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  showTab('ed');
+}
+function closeAnansiDemo() {
+  document.getElementById('anansiDemo').classList.remove('active');
+  document.body.style.overflow = '';
+}
+function showTab(tab) {
+  const edTab = document.getElementById('tabED');
+  const anansiTab = document.getElementById('tabAnansi');
+  const edPanel = document.getElementById('panelED');
+  const anansiPanel = document.getElementById('panelAnansi');
+  if (tab === 'ed') {
+    edPanel.style.display = 'block';
+    anansiPanel.style.display = 'none';
+    edTab.style.background = 'var(--bg-card)';
+    edTab.style.color = 'var(--text-bright)';
+    anansiTab.style.background = 'var(--bg)';
+    anansiTab.style.color = 'var(--text-dim)';
+  } else {
+    edPanel.style.display = 'none';
+    anansiPanel.style.display = 'block';
+    anansiTab.style.background = 'var(--bg-card)';
+    anansiTab.style.color = 'var(--terra)';
+    edTab.style.background = 'var(--bg)';
+    edTab.style.color = 'var(--text-dim)';
+  }
+}
+function runAnansiCascade() {
+  const btn = document.getElementById('demoRunBtn');
+  btn.disabled = true;
+  btn.textContent = 'Analyzing 61 pages...';
+  const wrsScore = document.getElementById('wrsScore');
+  const wrsBar = document.getElementById('wrsBar');
+
+  setTimeout(() => {
+    document.getElementById('trend1').classList.add('visible');
+    wrsScore.textContent = '5.0'; wrsScore.className = 'wrs-score orange';
+    wrsBar.style.width = '50%'; wrsBar.className = 'wrs-bar-fill orange';
+  }, 600);
+  setTimeout(() => {
+    document.getElementById('trend2').classList.add('visible');
+    wrsScore.textContent = '6.2';
+    wrsBar.style.width = '62%';
+  }, 1400);
+  setTimeout(() => {
+    document.getElementById('trend3').classList.add('visible');
+    wrsScore.textContent = '8.0'; wrsScore.className = 'wrs-score red';
+    wrsBar.style.width = '80%'; wrsBar.className = 'wrs-bar-fill red';
+  }, 2200);
+  setTimeout(() => {
+    document.getElementById('trend4').classList.add('visible');
+    wrsScore.textContent = '9.5';
+    wrsBar.style.width = '95%';
+  }, 3000);
+  setTimeout(() => {
+    document.getElementById('trend5').classList.add('visible');
+    wrsScore.textContent = '11.0';
+    wrsBar.style.width = '100%';
+  }, 3800);
+  setTimeout(() => {
+    document.getElementById('trend6').classList.add('visible');
+    wrsScore.textContent = '14'; 
+    btn.textContent = 'WRS: 14 — RED (CRITICAL)';
+    btn.style.background = '#c4544a';
+  }, 4600);
+  setTimeout(() => {
+    document.getElementById('demoSynthesis').classList.add('visible');
+  }, 5600);
+  setTimeout(() => {
+    document.getElementById('demoConfirm').classList.add('visible');
+    document.getElementById('demoResetBtn').style.display = 'block';
+  }, 6800);
+}
+function resetAnansiDemo() {
+  ['demoSynthesis','demoConfirm'].forEach(id => {
+    document.getElementById(id).classList.remove('visible');
+  });
+  ['trend1','trend2','trend3','trend4','trend5','trend6'].forEach(id => {
+    document.getElementById(id).classList.remove('visible');
+  });
+  const wrsScore = document.getElementById('wrsScore');
+  const wrsBar = document.getElementById('wrsBar');
+  wrsScore.textContent = '3.2'; wrsScore.className = 'wrs-score yellow';
+  wrsBar.style.width = '32%'; wrsBar.className = 'wrs-bar-fill yellow';
+  const btn = document.getElementById('demoRunBtn');
+  btn.disabled = false; btn.textContent = 'Run Anansi';
+  btn.style.background = '';
+  document.getElementById('demoResetBtn').style.display = 'none';
+}
+</script>
+
+</body>
+</html>
