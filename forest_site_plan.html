@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Forest — Site Plan | Rabid Raccoon Intelligence</title>
+<meta name="description" content="A map of the buildings in the forest. Every structure has a purpose. Every resident has jurisdiction.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0a0a0a;
+  --bg-elevated: #111111;
+  --bg-card: #161616;
+  --terra: #c4654a;
+  --terra-glow: #d4755a;
+  --terra-dim: #8a4433;
+  --text: #e8e4df;
+  --text-dim: #8a857e;
+  --text-bright: #f5f2ee;
+  --border: #2a2725;
+  --border-light: #3a3632;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--terra-dim); border-radius: 3px; }
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+h1, h2, h3, h4 { font-family: 'Instrument Serif', serif; font-weight: 400; color: var(--text-bright); }
+.mono { font-family: 'JetBrains Mono', monospace; }
+a { color: var(--terra); text-decoration: none; transition: color 0.3s; }
+a:hover { color: var(--terra-glow); }
+
+/* ── Nav ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  z-index: 100;
+  padding: 1.2rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10,10,10,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { display: flex; align-items: center; gap: 0.8rem; }
+.nav-logo img { height: 36px; width: auto; border-radius: 4px; }
+.nav-logo span { font-family: 'Instrument Serif', serif; font-size: 1.1rem; color: var(--text-bright); letter-spacing: 0.02em; }
+
+/* ── Page layout ── */
+.page-header {
+  padding: 10rem 2rem 4rem;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.page-header h1 {
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+.page-header .subtitle {
+  color: var(--text-dim);
+  font-size: 1.05rem;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+/* ── Building card ── */
+.building {
+  max-width: 860px;
+  margin: 4rem auto;
+  padding: 0 2rem;
+}
+.building-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 3rem;
+  position: relative;
+}
+.building-name {
+  font-size: 2rem;
+  margin-bottom: 0.3rem;
+}
+.building-occupant {
+  font-size: 0.78rem;
+  color: var(--terra);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.building-tagline {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 1.35rem;
+  color: var(--text-bright);
+  margin-bottom: 2rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--terra);
+}
+.building-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.building-meta dt {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.3rem;
+}
+.building-meta dd {
+  font-size: 0.95rem;
+  color: var(--text);
+  margin-bottom: 1.2rem;
+}
+.building-description {
+  color: var(--text);
+  font-size: 0.98rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+.building-easter-egg {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--terra-dim);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.building-status {
+  position: absolute;
+  top: 2rem;
+  right: 2.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--terra);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: rgba(196,101,74,0.08);
+  padding: 0.35rem 0.85rem;
+  border-radius: 4px;
+  border: 1px solid rgba(196,101,74,0.2);
+}
+
+/* ── Back link ── */
+.back-link {
+  display: block;
+  text-align: center;
+  padding: 4rem 2rem 6rem;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .building-card { padding: 2rem; }
+  .building-meta { grid-template-columns: 1fr; }
+  .building-status { position: static; display: inline-block; margin-bottom: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="images/rri_logo_300x300.png" alt="RRI">
+    <span>Rabid Raccoon Intelligence</span>
+  </a>
+</nav>
+
+<div class="page-header">
+  <h1>The Forest</h1>
+  <p class="subtitle">Site plan. Every structure has a purpose. Every resident has jurisdiction.</p>
+</div>
+
+<!-- ═══════ THE COURTHOUSE ═══════ -->
+<div class="building">
+  <div class="building-card">
+    <span class="building-status">Permanent Session</span>
+    <h2 class="building-name">The Courthouse</h2>
+    <p class="building-occupant mono">Open Evidence &mdash; High Justice</p>
+    <div class="building-tagline">&ldquo;Cases come to us.&rdquo;</div>
+
+    <dl class="building-meta">
+      <div>
+        <dt>Position</dt>
+        <dd>Northeast, elevated &mdash; a few steps up to reach the doors. Authority is spatial.</dd>
+      </div>
+      <div>
+        <dt>Materials</dt>
+        <dd>Board-formed concrete, aged copper detailing, heavy oak interior.</dd>
+      </div>
+    </dl>
+
+    <p class="building-description">
+      The Amendments are carved into the exterior stone facade, readable from the path. Open Evidence&rsquo;s bench: raised, dark wood, single lamp, citations always present. A brass scale. Verdict ledger open on the stand. One empty chair at the defense table, always.
+    </p>
+
+    <p class="building-easter-egg">// The chair has never been empty. It just looks that way.</p>
+  </div>
+</div>
+
+<a href="index.html" class="back-link">&larr; Back to RRI</a>
+
+</body>
+</html>
