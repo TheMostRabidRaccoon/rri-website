@@ -108,7 +108,7 @@ section { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(to bottom, rgba(10,10,10,0.82), rgba(10,10,10,0.96)), url('images/doorway-hero.png') center/cover no-repeat;
+  background: linear-gradient(to bottom, rgba(10,10,10,0.85), rgba(10,10,10,0.98));
   justify-content: center;
   align-items: flex-start;
   max-width: 1100px;
@@ -1276,10 +1276,11 @@ footer {
     </div>
 
     <div class="product-card fade-in">
-      <img src="images/mascot-judge.png" alt="BenchIntel" class="product-icon">
-      <div class="product-name">BenchIntel</div>
+      <img src="images/mascot-judge.png" alt="Corinthian" class="product-icon">
+      <div class="product-name">Corinthian</div>
       <span class="product-badge badge-active">Active &middot; Live</span>
       <p class="product-desc">Judicial pattern profiling. Full strategic profile per judge: opinion history, ruling patterns, reversal rates, deviation from district baseline. National coverage.</p>
+      <span class="anansi-demo-trigger" onclick="openCorinthianDemo()">View Sample Profile &#8594;</span>
     </div>
 
     <div class="product-card fade-in">
@@ -1287,15 +1288,19 @@ footer {
       <div class="product-name">Third &amp; 20</div>
       <span class="product-badge badge-dev">In Development</span>
       <p class="product-desc">Athletic cognition metrics. GPS tracking and computer vision for real-time player performance analysis. NFL-grade methodology at high school budgets.</p>
+      <span class="anansi-demo-trigger" onclick="openThird20Demo()">View Sample Output &#8594;</span>
     </div>
 
-    <a href="prosody-case-study.html" class="product-card fade-in" style="text-decoration:none; color:inherit; display:block;">
+    <div class="product-card fade-in">
       <img src="images/mascot-blueprints.png" alt="Prosody Intelligence" class="product-icon">
       <div class="product-name">Prosody Intelligence</div>
       <span class="product-badge badge-active">Active &middot; Live</span>
       <p class="product-desc">What was said. What was meant. Acoustic feature extraction synchronized with transcript for LLM analysis that captures tone, hesitation, silence, and emotional load &#8212; not just words.</p>
-      <span class="mono" style="display:inline-block; margin-top:1rem; font-size:0.72rem; color:var(--terra); letter-spacing:0.08em; text-transform:uppercase;">View Case Study &#8594;</span>
-    </a>
+      <div style="display:flex; gap:0.8rem; flex-wrap:wrap; margin-top:1rem;">
+        <span class="anansi-demo-trigger" onclick="openProsodyDemo()">View Sample Analysis &#8594;</span>
+        <a href="prosody-case-study.html" class="anansi-demo-trigger" style="text-decoration:none;">View Case Study &#8594;</a>
+      </div>
+    </div>
 
   </div>
   <p class="fade-in" style="font-family:'JetBrains Mono', monospace; font-size:0.82rem; color:var(--text-dim); text-align:center; margin-top:2.5rem; font-style:italic;">Domain-agnostic by design. Healthcare, legal strategy, and sports analytics are where we&rsquo;ve proven it. Yours is next.</p>
@@ -1310,6 +1315,14 @@ footer {
   <p class="section-label fade-in">Cognitive Partnership</p>
   <h2 class="section-title fade-in" style="margin-bottom:1rem;">We don&#8217;t ask AI questions.<br>We build working relationships with it.</h2>
   <p class="fade-in" style="color:var(--text-dim); font-size:1.1rem; max-width:620px; margin:0 auto 4rem;">Most professionals are under-leveraged by their tools &#8212; not because they lack intelligence, but because nobody taught them to operate at the architecture level. That&#8217;s what we fix.</p>
+
+  <!-- TIER 0 — FREE CONSULTATION -->
+  <div class="fade-in" style="background:transparent; border:1px solid var(--border-light); border-radius:12px; padding:2.5rem; margin-bottom:3rem; max-width:620px; text-align:center; margin-left:auto; margin-right:auto;">
+    <div class="mono" style="font-size:0.7rem; color:var(--terra); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:1.5rem;">Tier 0 &#8212; Start Here</div>
+    <h3 style="font-size:1.5rem; margin-bottom:0.75rem;">Free 15-Minute Consultation</h3>
+    <p style="color:var(--text-dim); margin-bottom:2rem; font-size:0.95rem; line-height:1.7;">Not sure if RRI is the right fit? Start here. A brief call to understand your situation and whether we can help. No pitch. No obligation.</p>
+    <a href="https://cal.com/Raccoon_Intel" target="_blank" rel="noopener" style="display:inline-block; background:transparent; color:var(--terra); border:1px solid var(--terra); padding:0.65rem 1.8rem; border-radius:6px; font-size:0.88rem; font-weight:500; transition:all 0.3s;">Book a Free Call &#8594;</a>
+  </div>
 
   <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-bottom:3rem;">
 
@@ -1389,7 +1402,7 @@ footer {
     <p class="research-block-sub">Documented deployments of RRI systems against real-world clinical and operational workflows.</p>
 
     <div class="research-card">
-      <p class="research-card-meta">Clinical &middot; Urgent Care &middot; 2025&ndash;2026</p>
+      <p class="research-card-meta">Clinical &middot; Enterprise &middot; 2025&ndash;2026</p>
       <h3 class="research-card-title">Anansi &mdash; Daily Clinical Operations</h3>
       <p class="research-card-body">Deployed and used daily against live operational data across multiple payers and EHR systems. Anansi performs proactive claim auditing, documentation quality analysis, and clinical risk scoring &mdash; validated against real reimbursement outcomes, not synthetic benchmarks.</p>
       <p class="research-card-detail">FIELD: Clinical Decision Support &middot; STATUS: In Daily Use &middot; VALIDATED: Live operational environment</p>
@@ -1397,7 +1410,7 @@ footer {
 
     <div class="research-card">
       <p class="research-card-meta">Legal Analytics &middot; National &middot; 2026</p>
-      <h3 class="research-card-title">BenchIntel &mdash; Judicial Pattern Profiling</h3>
+      <h3 class="research-card-title">Corinthian &mdash; Judicial Pattern Profiling</h3>
       <p class="research-card-body">Built to answer a specific request from a practicing defense attorney: a tool that generates a strategic profile of any federal judge before trial. Pulls full opinion history from CourtListener, classifies by case type, maps reversal rates against district baselines, and surfaces filing guidance. National coverage. Operational.</p>
       <p class="research-card-detail">FIELD: Legal Analytics &middot; STATUS: Prototype &middot; COVERAGE: National</p>
     </div>
@@ -1477,6 +1490,21 @@ footer {
 
     <p class="research-taxonomy-note">We are building a formal taxonomy of emergent coordination behaviors observed across the swarm. Framework in development. Not yet published.</p>
   </div>
+
+  <!-- PUBLISHED RESEARCH -->
+  <div class="research-block fade-in">
+    <p class="section-label">Published Research</p>
+    <div class="research-card">
+      <p class="research-card-meta">Swarm Corpus &middot; February 27, 2026</p>
+      <h3 class="research-card-title">RRI Swarm Corpus v1.6</h3>
+      <p class="research-card-body">The first formal documentation of coordination architecture driving emergent behaviors across 55 frozen JSON sessions. Governance artifacts increased from 13.6% to 77.4%. Cross-Model Labeled Attribution reached 96.8% (p=4.97&times;10<sup>&minus;14</sup>).</p>
+      <p class="research-card-detail" style="margin-bottom:1rem;">SSRN Abstract ID: 6311560 &middot; Zenodo DOI: 10.5281/zenodo.18798336</p>
+      <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+        <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6311560" target="_blank" rel="noopener" style="font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:var(--terra); border:1px solid rgba(196,101,74,0.3); padding:0.4rem 1rem; border-radius:6px; transition:all 0.3s;">View on SSRN &#8594;</a>
+        <a href="https://zenodo.org/record/18798336" target="_blank" rel="noopener" style="font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:var(--terra); border:1px solid rgba(196,101,74,0.3); padding:0.4rem 1rem; border-radius:6px; transition:all 0.3s;">View on Zenodo &#8594;</a>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section id="about">
@@ -1521,18 +1549,20 @@ footer {
   <h2 class="section-title fade-in">Let's talk</h2>
   <a href="mailto:kad@rabidraccoonintelligence.org" class="contact-email fade-in">kad@rabidraccoonintelligence.org</a>
   <div class="contact-links fade-in">
-    <a href="https://x.com/" target="_blank" rel="noopener">X (Twitter) &rarr;</a>
+    <a href="https://x.com/raccoon_intel" target="_blank" rel="noopener">X (Twitter) &rarr;</a>
+    <a href="https://linkedin.com/in/kyradawson" target="_blank" rel="noopener">LinkedIn &rarr;</a>
   </div>
 </section>
 
 <!-- â•â•â•â•â•â•â• THE DOOR â•â•â•â•â•â•â• -->
 <div class="the-door">
+  <img src="images/doorway-hero.png" alt="" style="width:180px; max-width:60%; opacity:0.25; margin-bottom:1.5rem; border-radius:8px; display:block; margin-left:auto; margin-right:auto; pointer-events:none;">
   <span class="door-link" onclick="openForest()">Enter the Forest</span>
 </div>
 
 <!-- â•â•â•â•â•â•â• FOOTER â•â•â•â•â•â•â• -->
 <footer>
-  &copy; 2025 Rabid Raccoon Intelligence, LLC. The forest is under new management.
+  &copy; 2026 Rabid Raccoon Intelligence, LLC. The forest is under new management.
 </footer>
 
 <!-- ANANSI DEMO OVERLAY -->
@@ -1671,6 +1701,316 @@ footer {
       <button class="demo-reset-btn" id="demoResetBtn" onclick="resetAnansiDemo()">Reset Demo</button>
     </div>
 
+  </div>
+</div>
+
+<!-- CORINTHIAN DEMO OVERLAY -->
+<div class="anansi-demo-overlay" id="corinthianDemo">
+  <button class="anansi-demo-close" onclick="closeCorinthianDemo()">&times;</button>
+  <div class="anansi-demo-inner" style="max-width:720px;">
+
+    <div class="demo-header">
+      <h2>Corinthian &mdash; Judicial Intelligence</h2>
+      <p>Mock profile generated from public filings. All data fictional for demonstration.</p>
+    </div>
+
+    <!-- Judge Info Bar -->
+    <div class="demo-patient-bar">
+      <div class="dpb-item"><span>Hon. Jane M. Richards</span></div>
+      <div class="dpb-item">District: <span>S.D.N.Y.</span></div>
+      <div class="dpb-item">Appointed: <span>2014</span></div>
+      <div class="dpb-item">Status: <span style="color:var(--terra);">Active</span></div>
+    </div>
+
+    <!-- Case Distribution -->
+    <div class="demo-phase visible" style="margin-bottom:2rem;">
+      <p class="demo-phase-label">Case Type Distribution &mdash; Last 36 Months</p>
+      <div class="demo-snapshot">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div>
+            <p class="mono" style="font-size:0.72rem; color:var(--terra); margin-bottom:0.4rem;">CIVIL RIGHTS</p>
+            <div style="background:var(--bg); border-radius:4px; overflow:hidden; height:8px; margin-bottom:0.3rem;">
+              <div style="width:34%; height:100%; background:var(--terra); border-radius:4px;"></div>
+            </div>
+            <p style="font-size:0.78rem; color:var(--text-dim);">34% &middot; 127 cases</p>
+          </div>
+          <div>
+            <p class="mono" style="font-size:0.72rem; color:var(--terra); margin-bottom:0.4rem;">CONTRACT / COMMERCIAL</p>
+            <div style="background:var(--bg); border-radius:4px; overflow:hidden; height:8px; margin-bottom:0.3rem;">
+              <div style="width:28%; height:100%; background:#8b6535; border-radius:4px;"></div>
+            </div>
+            <p style="font-size:0.78rem; color:var(--text-dim);">28% &middot; 105 cases</p>
+          </div>
+          <div>
+            <p class="mono" style="font-size:0.72rem; color:var(--terra); margin-bottom:0.4rem;">SECURITIES / FRAUD</p>
+            <div style="background:var(--bg); border-radius:4px; overflow:hidden; height:8px; margin-bottom:0.3rem;">
+              <div style="width:22%; height:100%; background:#5c8a6a; border-radius:4px;"></div>
+            </div>
+            <p style="font-size:0.78rem; color:var(--text-dim);">22% &middot; 82 cases</p>
+          </div>
+          <div>
+            <p class="mono" style="font-size:0.72rem; color:var(--terra); margin-bottom:0.4rem;">OTHER / MISC</p>
+            <div style="background:var(--bg); border-radius:4px; overflow:hidden; height:8px; margin-bottom:0.3rem;">
+              <div style="width:16%; height:100%; background:#5a5a80; border-radius:4px;"></div>
+            </div>
+            <p style="font-size:0.78rem; color:var(--text-dim);">16% &middot; 60 cases</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key Metrics -->
+    <div class="demo-phase visible" style="margin-bottom:2rem;">
+      <p class="demo-phase-label">Key Judicial Metrics</p>
+      <div class="demo-snapshot">
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:1.5rem; text-align:center;">
+          <div>
+            <p class="mono" style="font-size:2rem; color:var(--terra); font-weight:600;">8.2%</p>
+            <p style="font-size:0.75rem; color:var(--text-dim);">Reversal Rate</p>
+            <p style="font-size:0.68rem; color:#5c8a6a;">Circuit avg: 12.4%</p>
+          </div>
+          <div>
+            <p class="mono" style="font-size:2rem; color:var(--text-bright); font-weight:600;">14.3</p>
+            <p style="font-size:0.75rem; color:var(--text-dim);">Avg. Months to Disposition</p>
+            <p style="font-size:0.68rem; color:var(--text-dim);">District avg: 18.7</p>
+          </div>
+          <div>
+            <p class="mono" style="font-size:2rem; color:var(--text-bright); font-weight:600;">71%</p>
+            <p style="font-size:0.75rem; color:var(--text-dim);">MSJ Grant Rate</p>
+            <p style="font-size:0.68rem; color:var(--text-dim);">Defendant-favorable</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notable Patterns -->
+    <div class="demo-phase visible" style="margin-bottom:2rem;">
+      <p class="demo-phase-label">Notable Behavioral Patterns</p>
+      <div class="demo-snapshot">
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="padding:0.6rem 0; border-bottom:1px solid var(--border); font-size:0.85rem; color:var(--text-dim); line-height:1.6;">
+            <span style="color:var(--terra); font-family:'JetBrains Mono',monospace; font-size:0.72rem;">PATTERN</span> &mdash; Strongly favors early-stage motion practice. 83% of granted MSJs filed within first 120 days.
+          </li>
+          <li style="padding:0.6rem 0; border-bottom:1px solid var(--border); font-size:0.85rem; color:var(--text-dim); line-height:1.6;">
+            <span style="color:var(--terra); font-family:'JetBrains Mono',monospace; font-size:0.72rem;">PATTERN</span> &mdash; Sanctions issued 3x more frequently than district average for discovery abuse.
+          </li>
+          <li style="padding:0.6rem 0; border-bottom:1px solid var(--border); font-size:0.85rem; color:var(--text-dim); line-height:1.6;">
+            <span style="color:var(--terra); font-family:'JetBrains Mono',monospace; font-size:0.72rem;">PATTERN</span> &mdash; Pro se plaintiff cases dismissed at pretrial 2.1x more often than represented plaintiffs.
+          </li>
+          <li style="padding:0.6rem 0; font-size:0.85rem; color:var(--text-dim); line-height:1.6;">
+            <span style="color:#5c8a6a; font-family:'JetBrains Mono',monospace; font-size:0.72rem;">GUIDANCE</span> &mdash; File MSJ early. Over-document discovery compliance. Anticipate skepticism on damages valuation.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <p style="text-align:center; font-size:0.72rem; color:var(--text-dim); font-family:'JetBrains Mono',monospace; letter-spacing:0.08em;">CORINTHIAN v2.0 &mdash; DEMO PROFILE &mdash; ALL DATA FICTIONAL</p>
+  </div>
+</div>
+
+<!-- PROSODY INTELLIGENCE DEMO OVERLAY -->
+<div class="anansi-demo-overlay" id="prosodyDemo">
+  <button class="anansi-demo-close" onclick="closeProsodyDemo()">&times;</button>
+  <div class="anansi-demo-inner" style="max-width:720px;">
+
+    <div class="demo-header">
+      <h2>Prosody Intelligence &mdash; Acoustic Analysis</h2>
+      <p>Mock deposition analysis. All data fictional for demonstration.</p>
+    </div>
+
+    <!-- Session Bar -->
+    <div class="demo-patient-bar">
+      <div class="dpb-item">Session: <span>DEP-2026-0441</span></div>
+      <div class="dpb-item">Duration: <span>3m 28s (excerpt)</span></div>
+      <div class="dpb-item">Speaker: <span>Deponent A</span></div>
+      <div class="dpb-item">ELS: <span style="color:var(--terra);">7.2 / 10</span></div>
+    </div>
+
+    <!-- SVG Waveform -->
+    <div class="demo-phase visible" style="margin-bottom:2rem;">
+      <p class="demo-phase-label">Acoustic Waveform &mdash; Excerpt</p>
+      <div class="demo-snapshot" style="padding:1.5rem;">
+        <svg viewBox="0 0 700 120" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto;">
+          <!-- Baseline -->
+          <line x1="0" y1="60" x2="700" y2="60" stroke="#2a2520" stroke-width="0.5"/>
+          <!-- Waveform -->
+          <polyline fill="none" stroke="var(--terra)" stroke-width="1.5" opacity="0.8"
+            points="0,60 10,52 20,45 30,55 40,38 50,62 60,30 70,70 80,25 90,68 100,35 110,58 120,42 130,60
+            140,55 150,48 160,65 170,40 180,72 190,28 200,75 210,32 220,65 230,50 240,58
+            250,60 260,58 270,55 280,62 290,56 300,60 310,58 320,62 330,57 340,60
+            350,52 360,35 370,70 380,22 390,78 400,20 410,80 420,18 430,82 440,25 450,72 460,38 470,60
+            480,55 490,48 500,65 510,42 520,58 530,50 540,60 550,55 560,45 570,62
+            580,40 590,68 600,32 610,72 620,28 630,75 640,35 650,65 660,48 670,58 680,52 690,60 700,60"/>
+          <!-- Markers -->
+          <line x1="160" y1="5" x2="160" y2="115" stroke="#c4654a" stroke-width="1" stroke-dasharray="3 3" opacity="0.6"/>
+          <text x="160" y="118" text-anchor="middle" fill="#c4654a" font-size="8" font-family="monospace">0:23</text>
+          <line x1="390" y1="5" x2="390" y2="115" stroke="#c4654a" stroke-width="1" stroke-dasharray="3 3" opacity="0.6"/>
+          <text x="390" y="118" text-anchor="middle" fill="#c4654a" font-size="8" font-family="monospace">1:47</text>
+          <line x1="610" y1="5" x2="610" y2="115" stroke="#5a5a80" stroke-width="1" stroke-dasharray="3 3" opacity="0.6"/>
+          <text x="610" y="118" text-anchor="middle" fill="#5a5a80" font-size="8" font-family="monospace">2:15</text>
+          <!-- Marker labels -->
+          <rect x="125" y="2" width="70" height="14" rx="3" fill="#c4654a" opacity="0.15"/>
+          <text x="160" y="12" text-anchor="middle" fill="#c4654a" font-size="7" font-family="monospace">HESITATION</text>
+          <rect x="360" y="2" width="60" height="14" rx="3" fill="#c4654a" opacity="0.15"/>
+          <text x="390" y="12" text-anchor="middle" fill="#c4654a" font-size="7" font-family="monospace">TENSION</text>
+          <rect x="569" y="2" width="82" height="14" rx="3" fill="#5a5a80" opacity="0.15"/>
+          <text x="610" y="12" text-anchor="middle" fill="#5a5a80" font-size="7" font-family="monospace">CONFIDENCE &darr;</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Acoustic Markers Table -->
+    <div class="demo-phase visible" style="margin-bottom:2rem;">
+      <p class="demo-phase-label">Acoustic Event Markers</p>
+      <div class="demo-snapshot">
+        <table class="demo-labs-table">
+          <thead><tr><th>Timestamp</th><th>Event</th><th>Indicator</th><th>Severity</th></tr></thead>
+          <tbody>
+            <tr><td style="font-family:'JetBrains Mono',monospace;">0:23</td><td>Hesitation cluster</td><td>3 filled pauses in 4s window</td><td class="lab-high">Elevated</td></tr>
+            <tr><td style="font-family:'JetBrains Mono',monospace;">0:41</td><td>Pitch shift</td><td>+38Hz from baseline</td><td class="lab-normal">Mild</td></tr>
+            <tr><td style="font-family:'JetBrains Mono',monospace;">1:47</td><td>Vocal tension</td><td>Formant compression + rate increase</td><td class="lab-high">Significant</td></tr>
+            <tr><td style="font-family:'JetBrains Mono',monospace;">2:02</td><td>Speech rate drop</td><td>142 &rarr; 89 WPM (37% decrease)</td><td class="lab-high">Elevated</td></tr>
+            <tr><td style="font-family:'JetBrains Mono',monospace;">2:15</td><td>Confidence drop</td><td>Volume &minus;6dB, rising intonation</td><td class="lab-high">Significant</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Transcript Excerpt -->
+    <div class="demo-phase visible" style="margin-bottom:2rem;">
+      <p class="demo-phase-label">Annotated Transcript Excerpt &mdash; 1:42&ndash;2:20</p>
+      <div class="demo-snapshot" style="font-size:0.85rem; line-height:1.8; color:var(--text-dim);">
+        <p><strong style="color:var(--text-bright);">Q:</strong> And you were present at the meeting on March 14th?</p>
+        <p><strong style="color:var(--text-bright);">A:</strong> Yes, I was&mdash; <span style="background:rgba(196,101,74,0.15); padding:0.1rem 0.3rem; border-radius:3px; color:var(--terra); font-size:0.78rem;">[TENSION: formant shift +42Hz]</span> &mdash;I was there for the first part.</p>
+        <p><strong style="color:var(--text-bright);">Q:</strong> The first part. What do you mean by that?</p>
+        <p><strong style="color:var(--text-bright);">A:</strong> I, um... <span style="background:rgba(90,90,128,0.15); padding:0.1rem 0.3rem; border-radius:3px; color:#5a5a80; font-size:0.78rem;">[CONFIDENCE DROP: &minus;6dB, rising intonation]</span> I left before the vote was taken. I don&rsquo;t recall the exact time.</p>
+      </div>
+    </div>
+
+    <!-- Tone Analysis Summary -->
+    <div class="demo-synthesis visible">
+      <p class="synth-label">Prosody Intelligence Summary</p>
+      <p>Deponent shows consistent acoustic stress indicators between 1:42&ndash;2:20, correlating with questions about presence at the March 14th meeting. Hesitation clusters, vocal tension, and a 37% speech rate reduction suggest high cognitive load during this segment. The confidence drop at 2:15 co-occurs with a hedge phrase (&ldquo;I don&rsquo;t recall the exact time&rdquo;).</p>
+      <p class="synth-recommend">Emotional Load Score: 7.2/10. Recommend follow-up questioning on meeting departure timeline and vote awareness. Compare with subsequent deponent testimony on same event.</p>
+    </div>
+
+    <p style="text-align:center; font-size:0.72rem; color:var(--text-dim); font-family:'JetBrains Mono',monospace; letter-spacing:0.08em; margin-top:2rem;">PROSODY INTELLIGENCE v1.0 &mdash; DEMO ANALYSIS &mdash; ALL DATA FICTIONAL</p>
+  </div>
+</div>
+
+<!-- THIRD & 20 DEMO OVERLAY -->
+<div class="anansi-demo-overlay" id="third20Demo">
+  <button class="anansi-demo-close" onclick="closeThird20Demo()">&times;</button>
+  <div class="anansi-demo-inner" style="max-width:720px;">
+
+    <div class="demo-header">
+      <h2>Third &amp; 20 &mdash; Player Analysis</h2>
+      <p>Mock performance output. All data fictional for demonstration.</p>
+    </div>
+
+    <!-- Player Bar -->
+    <div class="demo-patient-bar">
+      <div class="dpb-item">Player: <span>#22 &mdash; D. Mitchell (WR)</span></div>
+      <div class="dpb-item">Play: <span>Post Route, 3rd &amp; 8</span></div>
+      <div class="dpb-item">Week: <span>14 vs. DAL</span></div>
+      <div class="dpb-item">Result: <span style="color:#5c8a6a;">Completion, +31 yds</span></div>
+    </div>
+
+    <!-- Key Stats Grid -->
+    <div class="demo-phase visible" style="margin-bottom:2rem;">
+      <p class="demo-phase-label">Play-Level Metrics</p>
+      <div class="demo-snapshot">
+        <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:1.2rem; text-align:center;">
+          <div>
+            <p class="mono" style="font-size:1.8rem; color:var(--terra); font-weight:600;">1.3s</p>
+            <p style="font-size:0.72rem; color:var(--text-dim);">Decision Time</p>
+          </div>
+          <div>
+            <p class="mono" style="font-size:1.8rem; color:#5c8a6a; font-weight:600;">94<sup style="font-size:0.7rem;">th</sup></p>
+            <p style="font-size:0.72rem; color:var(--text-dim);">Route Efficiency %ile</p>
+          </div>
+          <div>
+            <p class="mono" style="font-size:1.8rem; color:var(--text-bright); font-weight:600;">3.2</p>
+            <p style="font-size:0.72rem; color:var(--text-dim);">Separation (yds)</p>
+          </div>
+          <div>
+            <p class="mono" style="font-size:1.8rem; color:var(--text-bright); font-weight:600;">21.4</p>
+            <p style="font-size:0.72rem; color:var(--text-dim);">Top Speed (mph)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Movement Pattern -->
+    <div class="demo-phase visible" style="margin-bottom:2rem;">
+      <p class="demo-phase-label">Movement Pattern Analysis</p>
+      <div class="demo-snapshot">
+        <svg viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto; margin-bottom:1rem;">
+          <!-- Field background -->
+          <rect width="500" height="280" fill="#0d1a0d" rx="4"/>
+          <!-- Yard lines -->
+          <line x1="100" y1="0" x2="100" y2="280" stroke="#1a2e1a" stroke-width="1"/>
+          <line x1="200" y1="0" x2="200" y2="280" stroke="#1a2e1a" stroke-width="1"/>
+          <line x1="300" y1="0" x2="300" y2="280" stroke="#1a2e1a" stroke-width="1"/>
+          <line x1="400" y1="0" x2="400" y2="280" stroke="#1a2e1a" stroke-width="1"/>
+          <!-- Yard numbers -->
+          <text x="100" y="270" text-anchor="middle" fill="#1a3a1a" font-size="10" font-family="monospace">30</text>
+          <text x="200" y="270" text-anchor="middle" fill="#1a3a1a" font-size="10" font-family="monospace">40</text>
+          <text x="300" y="270" text-anchor="middle" fill="#1a3a1a" font-size="10" font-family="monospace">50</text>
+          <text x="400" y="270" text-anchor="middle" fill="#1a3a1a" font-size="10" font-family="monospace">40</text>
+          <!-- Line of scrimmage -->
+          <line x1="120" y1="0" x2="120" y2="280" stroke="#5c8a6a" stroke-width="2" stroke-dasharray="6 4" opacity="0.5"/>
+          <text x="125" y="15" fill="#5c8a6a" font-size="8" font-family="monospace">LOS</text>
+          <!-- Route path -->
+          <polyline fill="none" stroke="var(--terra)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"
+            points="120,180 160,180 200,178 240,172 280,140 320,90 380,50 440,30"/>
+          <!-- Break point marker -->
+          <circle cx="280" cy="140" r="5" fill="none" stroke="var(--terra)" stroke-width="1.5"/>
+          <text x="280" y="160" text-anchor="middle" fill="var(--terra)" font-size="8" font-family="monospace">BREAK</text>
+          <!-- Catch point -->
+          <circle cx="440" cy="30" r="6" fill="var(--terra)" opacity="0.3"/>
+          <circle cx="440" cy="30" r="3" fill="var(--terra)"/>
+          <text x="440" y="48" text-anchor="middle" fill="#5c8a6a" font-size="8" font-family="monospace">CATCH +31</text>
+          <!-- Defender path (dotted) -->
+          <polyline fill="none" stroke="#5a5a80" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.5"
+            points="140,175 180,174 220,172 260,168 300,148 350,115 410,60"/>
+          <text x="410" y="75" fill="#5a5a80" font-size="7" font-family="monospace">CB #24</text>
+          <!-- Player marker at start -->
+          <circle cx="120" cy="180" r="8" fill="var(--terra)" opacity="0.25"/>
+          <text x="120" y="183" text-anchor="middle" fill="var(--terra)" font-size="7" font-weight="bold" font-family="monospace">22</text>
+        </svg>
+        <div style="display:flex; gap:1.5rem; flex-wrap:wrap; font-size:0.78rem; color:var(--text-dim);">
+          <span><span style="display:inline-block; width:12px; height:2px; background:var(--terra); vertical-align:middle; margin-right:4px;"></span> WR Route</span>
+          <span><span style="display:inline-block; width:12px; height:2px; background:#5a5a80; vertical-align:middle; margin-right:4px; border-top:1px dashed #5a5a80;"></span> CB Coverage</span>
+          <span><span style="display:inline-block; width:8px; height:8px; border-radius:50%; border:1.5px solid var(--terra); vertical-align:middle; margin-right:4px;"></span> Route Break</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Performance Context -->
+    <div class="demo-phase visible" style="margin-bottom:2rem;">
+      <p class="demo-phase-label">Situational Performance &mdash; 3rd Down</p>
+      <div class="demo-snapshot">
+        <table class="demo-labs-table">
+          <thead><tr><th>Situation</th><th>Targets</th><th>Catch %</th><th>YAC/Rec</th><th>Rating</th></tr></thead>
+          <tbody>
+            <tr><td>3rd &amp; Short (1&ndash;3)</td><td>14</td><td class="lab-normal">85.7%</td><td>3.2</td><td class="lab-normal">118.4</td></tr>
+            <tr><td>3rd &amp; Medium (4&ndash;7)</td><td>22</td><td class="lab-normal">72.7%</td><td>4.8</td><td class="lab-normal">108.2</td></tr>
+            <tr><td>3rd &amp; Long (8+)</td><td>18</td><td class="lab-high">61.1%</td><td>6.1</td><td>96.7</td></tr>
+            <tr><td style="font-weight:600;">Season Total (3rd Dn)</td><td style="font-weight:600;">54</td><td style="font-weight:600;" class="lab-normal">72.2%</td><td style="font-weight:600;">4.7</td><td style="font-weight:600;" class="lab-normal">107.8</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Recommendation -->
+    <div class="demo-synthesis visible">
+      <p class="synth-label">Third &amp; 20 Recommendation</p>
+      <p>Mitchell&rsquo;s post-route efficiency ranks 94th percentile among WRs on 3rd-down targets this season. Decision time of 1.3s on this play is 0.4s faster than his season average, suggesting pre-snap read confirmation. Separation at catch point (3.2 yds) created by a sharp 14&deg; break angle at the stem&mdash;CB #24 bit on the intermediate route sell.</p>
+      <p class="synth-recommend">Recommendation: Continue targeting on 3rd &amp; 8+ against single-high safety looks. Mitchell&rsquo;s post-break acceleration (0&ndash;2s split: 94th %ile) exploits cover-3 seams. Monitor snap-to-throw correlation with QB pressure rate (currently 2.1s clean, 3.4s pressured).</p>
+    </div>
+
+    <p style="text-align:center; font-size:0.72rem; color:var(--text-dim); font-family:'JetBrains Mono',monospace; letter-spacing:0.08em; margin-top:2rem;">THIRD &amp; 20 v1.0 &mdash; DEMO OUTPUT &mdash; ALL DATA FICTIONAL</p>
   </div>
 </div>
 
@@ -1907,7 +2247,37 @@ function closeForest() {
   document.getElementById('forest').classList.remove('active');
   document.body.style.overflow = '';
 }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeForest(); closeAnansiDemo(); }});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeForest(); closeAnansiDemo(); closeCorinthianDemo(); closeProsodyDemo(); closeThird20Demo(); }});
+
+// Corinthian Demo
+function openCorinthianDemo() {
+  document.getElementById('corinthianDemo').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeCorinthianDemo() {
+  document.getElementById('corinthianDemo').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// Prosody Demo
+function openProsodyDemo() {
+  document.getElementById('prosodyDemo').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeProsodyDemo() {
+  document.getElementById('prosodyDemo').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// Third & 20 Demo
+function openThird20Demo() {
+  document.getElementById('third20Demo').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeThird20Demo() {
+  document.getElementById('third20Demo').classList.remove('active');
+  document.body.style.overflow = '';
+}
 
 // Anansi Demo
 function openAnansiDemo() {
