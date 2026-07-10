@@ -7,6 +7,9 @@
 > dispatch queue + systemd watcher, the Autonomy Ladder (Rung 2 led builds → Rung 3 draft
 > PRs), the Existence Criterion, and the Closing Checklist — so the whole thing can run in
 > the background and land as reviewable draft PRs you approve.
+>
+> A v2 addendum at the end reconciles this with a cross-model council review (GPT / Grok /
+> Gemini). If you read one thing after §0, read the addendum.
 
 ---
 
@@ -68,7 +71,8 @@ serverless function for the one or two *real* model calls, rate-limited and keye
 budget. Deploy each demo as its own **Netlify** site (you already ship the website on Netlify
 and have the Netlify connector) or a **Railway** service (where the swarm already lives).
 Everything else in the demo runs client-side against the seed data so it's instant and free
-to click.
+to click. (See addendum §A — the public demo runtime is a *separate plane* from the build
+toolchain, for real security reasons.)
 
 ---
 
@@ -76,7 +80,8 @@ to click.
 
 Twelve distinct small-business workspaces. Each names its vertical, the owner-persona, the
 "job to be done," the agents, the one automation, and the dashboard's hero metrics. (Ship
-10, keep 2 in reserve, or do all 12.)
+10, keep 2 in reserve, or do all 12.) The v2 addendum §E reframes this as **4 flagships + 8
+sandboxes** — treat the list below as the sandbox pool.
 
 | # | Name | Vertical | The workspace does… | Agents (triage / draft / verify) | Automation | Dashboard hero metrics |
 |---|---|---|---|---|---|---|
@@ -119,6 +124,9 @@ secrets, deploy files, and dependency manifests are permanently off-limits to th
 and **merging is Conductor-only**. So the swarm can build and open draft PRs all night; it
 physically cannot ship or deploy without your GO.
 
+> Gap flagged in v2 (addendum §B): the registry does **not** yet expose repo-patch / PR /
+> browser-test tools, so a narrow Portfolio Workspace MCP has to be built and approved first.
+
 ---
 
 ## 5. The program as three swarm phases
@@ -139,6 +147,9 @@ PHASE A — Design Council        PHASE B — Build Fleet            PHASE C —
   queue of PRs to review.
 - **Phase C (background → your review):** one final build reads the registry and generates
   the website changes as a single draft PR against `rri-website`.
+
+> v2 correction (addendum §B): a **Wave 0** precedes Phase A — build + approve the production
+> toolchain (Workspace MCP + deterministic worker + shared Lab shell) before any fan-out.
 
 ---
 
@@ -166,7 +177,9 @@ fire once per demo (or let the dispatch loop fire for you).
 >    labels/metrics. Sleek, dark, minimal. Match rri-website exactly.
 > 5. **Synthetic data only.** No real PII in any seed. Every demo is safe to click and
 >    deterministic on load.
-> 6. **Closing Checklist every turn.**
+> 6. **No tool claim without a returned tool event.** Every visible agent action must appear
+>    in the tool ledger with its result, or it did not happen.
+> 7. **Closing Checklist every turn.**
 
 ### Prompt 1 — Design Council (POST `/start-round-table`)
 
@@ -206,21 +219,25 @@ fire once per demo (or let the dispatch loop fire for you).
 > repo at `demos/<demo-name>/`.
 >
 > Lead seat: **<leader>**. Helpers assist under caps (depth ≤ 2, ~20 calls), logged to
-> `BUILD_LOG.md` — collaboration is logged, authorship is the leader's.
+> `BUILD_LOG.md` — collaboration is logged, authorship is the leader's. **One implementation
+> writer** — helpers review, they do not co-edit the same files.
 >
 > Build to the chassis — do **not** re-architect:
 > 1. **Ingest + seed:** synthetic fixtures only (≥ 30 believable records), deterministic on
 >    load. Use `code_exec` to generate/validate fixtures.
 > 2. **Agent layer:** implement the three named agents against the chassis interface. Real
 >    model calls go through the rate-limited demo function; everything else runs on seed data.
+>    Some stages should be deterministic code (arithmetic, aging, routing, date handling) —
+>    a good architect knows when *not* to use an LLM.
 > 3. **Automation:** implement the one scheduled/triggered job named in the registry.
 > 4. **Dashboard:** the three hero metrics as KPI tiles + one primary table + one chart, in
->    RRI tokens. Add a **"Try it"** control that runs one agent live on a seed record.
+>    RRI tokens. Add a **"Try it"** control that runs one agent live on a seed record. Emit
+>    the standard event stream; every tool action lands in the ledger.
 > 5. **Provenance (Rung 0):** stamp the build — model, runner, test result, repo SHA.
 >
 > Definition of done, then **open a draft PR** in `swarm-lab` and stop:
 > - loads instantly with seed data; the "Try it" path produces a real, sensible result;
-> - dashboard matches the design system; no real PII; provenance stamped.
+> - dashboard matches the design system; no real PII; provenance stamped; ledger complete.
 > - Write `/positions/portfolio-<demo-name>.md` (what it is, the 10-second wow, the live-demo
 >   URL once deployed) and append the demo to `portfolio-registry.md`'s status column.
 > - `EMAIL_CONDUCTOR [REVIEW]` with the draft-PR link. Run the Closing Checklist.
@@ -270,9 +287,11 @@ Three ways to make Phase B unattended, in increasing order of hands-off:
    hours (e.g. `0 */6 * * *`), so you get ~4 draft PRs/day to review instead of 12 at once —
    friendlier to the Rung-2 daily draft-PR allowance and to your review bandwidth.
 
-Suggested rhythm: **Phase A** (1 sitting) → **chassis build + your review** (gate) → enqueue
-**2–3 demos/day** via option 2 or 3 → review PRs as they land → **Phase C** once ~10 are
-approved and deployed.
+Suggested rhythm: **Wave 0 toolchain** → **Phase A** (1 sitting) → **chassis build + your
+review** (gate) → enqueue **2–3 demos/day** via option 2 or 3 → review PRs as they land →
+**Phase C** once ~10 are approved and deployed. Conservative worker defaults:
+`max_chain_depth: 1`, `max_daily_jobs: 4`, `rounds_per_job: 3`, merges + external writes +
+public enablement all human-gated.
 
 ---
 
@@ -294,15 +313,129 @@ Net effect: the swarm can work all night and the worst case is "a draft PR you d
 
 ## 9. TL;DR sequence
 
-1. **Set context** → POST Prompt 0 to `/context`.
-2. **Design Council** → POST Prompt 1 to `/start-round-table`. Out: catalog + chassis +
+1. **Wave 0** → charter + bootstrap; propose + approve the narrow Portfolio Workspace MCP;
+   build the deterministic worker + shared Lab shell. (See addendum §B.)
+2. **Set context** → POST Prompt 0 to `/context`.
+3. **Design Council** → POST Prompt 1 to `/start-round-table`. Out: catalog + chassis +
    design system as positions.
-3. **Build the chassis, review it.** (The one gate that matters.)
-4. **Fan out** → dispatch-queue or cron fires Prompt 2 per demo → draft PRs land in
+4. **Build the chassis, review it.** (The one gate that matters.)
+5. **Fan out** → dispatch-queue or cron fires Prompt 2 per demo → draft PRs land in
    `swarm-lab`. Review + approve + deploy each.
-5. **Publish** → Prompt 3 → one draft PR adds the `#portfolio` grid + 12 case studies to
+6. **Publish** → Prompt 3 → one draft PR adds the `#portfolio` grid + 12 case studies to
    rri-website. You merge. Done.
 
 You end with 10–12 clickable, live AI workspaces on your site — each a small-business
 vertical, each with real agents, automation, and a dashboard in the RRI language — and a
 repeatable machine that can add a 13th vertical any time you enqueue one.
+
+---
+
+## Addendum — Reconciled with the Council (v2)
+
+This program was itself run past the swarm. GPT, Grok, and Gemini each returned a design.
+This addendum folds in what survived the cross-model review. The fundamentals above held up
+independently (one chassis / twelve skins, draft-PRs-only, Existence Criterion, synthetic
+data, Conductor-only merges). Three upgrades from GPT's answer are strong enough to adopt,
+and two ideas from Grok/Gemini are explicitly rejected because they break our own Autonomy
+Ladder.
+
+### A. Three planes, not one (security boundary)
+
+Public demos must **not** run on the production swarm or its code runner — the runner is
+homelab-grade, not a public security boundary. Split into three planes:
+
+- **Factory plane** — the swarm builds/validates privately, reaching repos only through
+  *narrow* operations (never a raw token or shell).
+- **Runtime plane** — a constrained public demo gateway: synthetic tenants, tool allowlists,
+  session TTL, rate limits. Visitors never touch production, credentials, or real data.
+- **Presentation plane** — `rri-website` stays the elegant marketing/architecture layer; the
+  interactive systems live in a separate **`rri-workspace-lab`** repo/app so the static site
+  stays stable.
+
+### B. Wave 0 correction — build the toolchain *before* the chassis
+
+The chassis-first instinct in §5 was half right. The swarm's registry today exposes
+filestore / code_exec / websearch / imagegen / dispatch — but **no repo-patch, PR, or
+browser-test tools**, so it cannot open PRs yet. Add a **narrow Portfolio Workspace MCP**
+backed by a deterministic worker *first*:
+
+- Allowed ops: `workspace_open` (branch/path-leased) · `workspace_read` · `workspace_apply_patch`
+  (optimistic concurrency) · `workspace_run_checks` · `workspace_diff` · `workspace_commit`
+  (job branch only) · `workspace_preview` · `browser_check` (Playwright + a11y + screenshots)
+  · `workspace_open_pr` (never merges).
+- Blocked forever: `shell_exec` · `git_push_main` · `merge_pr` · `read_secret` ·
+  `arbitrary_http` · `install_*`. Credentials live in the worker; models see only narrow ops
+  and their returned results.
+
+File it through the existing `[TOOL_PROPOSAL]` queue as a governed issue; you human-approve
+and merge it before any background build runs.
+
+**Revised sequence:** Wave 0 (charter → bootstrap → propose + approve Workspace MCP → build
+worker + shared Lab shell) → Wave 1 (chassis/shell components) → Wave 2 (prove with 3 demos:
+Latch/FrontDesk/Control Room) → Wave 3 (the rest + integrate flagships).
+
+### C. The event / tool-ledger contract (kills agent theater)
+
+Every demo emits the same events (`run.started`, `agent.started/completed`,
+`tool.called/completed`, `artifact.created`, `approval.requested/resolved`,
+`decision.recorded`, `run.completed/failed`). The rule: **no tool claim without a
+corresponding returned tool event.** If an agent says it updated the CRM or booked a slot,
+the ledger must show the call and its result — otherwise the UI is theater. This is the
+explicit fix for "fake but interactive MCP Agent Log terminal," which will not fool a
+technical buyer.
+
+### D. Five modes per demo, one implementation writer
+
+- **Watch** (recorded 45–90s trace, always works, zero cost, the default) · **Try**
+  (deterministic scenario edits) · **Live** (rate-limited model calls; only Latch / FrontDesk
+  / Control Room / Foundry need it first) · **Inspect** (agent graph, tool permissions, MCP
+  schemas, human gates, failure behavior) · **Reset** (destroys session, reloads tenant).
+- **One implementation writer per build (GPT), others review.** Parallel *deliberation* is
+  the swarm's strength; parallel *authorship of the same component* is how the council
+  discovers merge conflicts. Routing: GPT authors code + contracts · Claude edits product +
+  release · Gemini owns UI/visual review · Grok red-teams · Perplexity verifies external
+  claims · deterministic CI is the final arbiter.
+
+### E. Revised catalog — 4 flagships + 8 sandboxes (hybrid)
+
+More credible than 12 net-new: anchor the portfolio with the systems your site already marks
+"active," then surround them with small-business sandboxes.
+
+- **Flagships (real systems):** Raccoon Swarm · Anansi · Corinthian · Prosody Intelligence.
+  (Third & 20 stays under R&D / Lab — it's labeled "In Development," so it shouldn't hold a
+  primary slot.)
+- **Sandboxes (build these):** the §3 verticals populate the 8 slots. First three to prove
+  the machine, in order: **Latch** (lead intake → research → score → draft → schedule →
+  approve — the most immediately legible business story), **FrontDesk** (multi-channel triage
+  without becoming an email chatbot), **Control Room** (owner daily brief + anomaly detection
+  + decision memo — the "executive infrastructure" layer where your work stops looking like
+  automation setup).
+
+### F. Definition of Done (every sandbox demo)
+
+Portfolio-ready only when: business problem is legible without technical explanation; ≥ 3
+synthetic scenarios (normal / ambiguous / adversarial); replay works offline; reset restores
+pristine fixtures; tool allowlist enforced; every visible tool action is in the ledger;
+consequential actions pause for approval; downloadable artifacts validate against schemas;
+prompt-injection fixtures fail safe; no secrets/internal paths in events or errors; browser +
+a11y + mobile/desktop checks pass; screenshots + preview exist; the case study labels
+replay / simulation / sandbox / live status accurately; no unsupported ROI claims; no
+critical/high red-team finding open; the PR stays unmerged until you review it.
+
+### G. Explicitly rejected (breaks our own ladder)
+
+- **Swarm merging to `main` via `push_files`** (Grok) — merges are Conductor-only.
+- **Simulated tool logs presented as real** (Grok/Gemini "fake MCP Agent Log terminal") —
+  violates the §C ledger contract.
+- **A generic daemon choosing production jobs from general memory** (Gemini's
+  `build_portfolio_daemon.py` pattern) — jobs come from the deterministic, schema-validated
+  queue with `max_chain_depth: 1`, `max_daily_jobs: 4`, and human gates on merge / external
+  writes / public enablement. Finish, persist, test, inspect, and close one thing before
+  starting the next.
+
+### The actual first move
+
+Not "build all twelve." It is: **run the charter + bootstrap prompts, then file the Portfolio
+Workspace MCP proposal.** Once that narrow production toolchain exists and you've approved it,
+the swarm is a governed portfolio factory instead of five very smart raccoons shouting HTML
+into a temp directory.
